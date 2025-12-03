@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento Dulce de Leche Beauty Studio</title>
+    <!-- Carrega o Tailwind CSS para o estilo moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo da fonte Inter e CORES PERSONALIZADAS BASEADAS NO LOGO */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F6E6; /* Fundo Creme Claro (Cor do Logo) */
+        }
+        
+        /* Cor Principal (Marrom Escuro / Dulce de Leche) */
+        .color-main { background-color: #6A3232; } 
+        .text-color-main { color: #6A3232; }
+        .border-color-main { border-color: #6A3232; }
+        
+        /* Cor de Destaque/Acento (Dourado/Cobre) */
+        .color-accent { background-color: #B8860B; }
+        .text-color-accent { color: #B8860B; }
+        
+        /* Estilo do container principal */
+        #app {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra mais refinada */
+        }
+
+        /* Estilo elegante para o botão de Agendar */
+        #scheduling-form button {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(106, 50, 50, 0.4); /* Sombra da cor principal */
+        }
+        #scheduling-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(106, 50, 50, 0.6);
+        }
+
+        /* Oculta as setas do input number */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 flex items-start justify-center">
+
+    <div id="app" class="w-full max-w-lg bg-white rounded-xl p-6 sm:p-10 transition-all duration-300">
+        
+        <!-- Cabeçalho (Título Principal Solicitado) -->
+        <header class="mb-8 text-center">
+            <!-- Título maior e com a cor principal -->
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-color-main tracking-tight mb-1">
+                Agendamento
+            </h1>
+            <p class="text-lg font-semibold text-gray-700">Dulce de Leche Beauty Studio</p>
+            <p class="text-sm text-gray-500 mt-2">Tan dulce como tu nombre, tan única como tú.</p>
+            <div id="message-box" class="mt-4 hidden p-3 rounded-lg text-sm transition-all duration-300 border"></div>
+        </header>
+
+        <!-- Formulário de Agendamento -->
+        <form id="scheduling-form">
+            
+            <!-- 1. Campo de Serviço -->
+            <div class="mb-6">
+                <label for="service" class="block text-sm font-medium text-gray-700 mb-2">Serviço Desejado</label>
+                <select id="service" required
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-color-main focus:border-color-main transition duration-150 shadow-sm hover:shadow-md">
+                    <option value="" disabled selected>Selecione um Serviço...</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-2">Os preços serão confirmados pelo WhatsApp.</p>
+            </div>
+
+            <!-- 2. Campo de Data (Calendário Nativo) -->
+            <div class="mb-6">
+                <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Selecione a Data</label>
+                <input type="date" id="date" required 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-color-main focus:border-color-main transition duration-150 cursor-pointer shadow-sm hover:shadow-md">
+            </div>
+
+            <!-- 3. Campo de Horário (Carregado dinamicamente) -->
+            <div class="mb-6">
+                <label for="time" class="block text-sm font-medium text-gray-700 mb-2">Horário Disponível</label>
+                <select id="time" required disabled
+                    class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-color-main focus:border-color-main transition duration-150 shadow-sm">
+                    <option value="" disabled selected>Selecione a Data Primeiro</option>
+                </select>
+                <p id="hours-info" class="text-xs text-color-main font-semibold mt-2 hidden"></p>
+            </div>
+
+            <!-- 4. Campo Nome do Cliente -->
+            <div class="mb-6">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Seu Nome Completo</label>
+                <input type="text" id="name" required placeholder="Ex: Maria da Silva"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-color-main focus:border-color-main transition duration-150 shadow-sm hover:shadow-md">
+            </div>
+
+            <!-- 5. Campo Telefone (Paraguai +595) -->
+            <div class="mb-8">
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Seu WhatsApp (Paraguai)</label>
+                <div class="flex items-center">
+                    <!-- Detalhe com a cor de destaque do logo -->
+                    <span class="inline-flex items-center p-3 text-white color-accent border border-r-0 border-color-accent rounded-l-lg font-semibold shadow-sm">
+                        +595
+                    </span>
+                    <input type="number" id="phone" required placeholder="982 644359 (apenas números)" pattern="[0-9]*"
+                        class="flex-1 min-w-0 p-3 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-color-main focus:border-color-main transition duration-150 shadow-sm hover:shadow-md">
+                </div>
+            </div>
+
+            <!-- Botão de Confirmação (Estilo Elegante Aprimorado) -->
+            <button type="submit" id="schedule-button"
+                class="w-full color-main text-white font-bold py-3 rounded-lg focus:outline-none focus:ring-4 focus:ring-color-main focus:ring-opacity-70">
+                Confirmar Agendamento via WhatsApp
+            </button>
+        </form>
+
+        <footer class="mt-10 text-center text-xs text-gray-400">
+            <p>&copy; Dulce de Leche Beauty Studio. Todos os direitos reservados.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- CONFIGURAÇÕES GLOBAIS ---
+        const WHATSAPP_NUMBER = "595982644359"; // O número de WhatsApp sem o '+'
+        const WHATSAPP_CODE = "+595"; // Código de área para exibição
+        
+        // Regras de Horário de Funcionamento
+        const BUSINESS_HOURS = {
+            WEEKDAY: { start: 15, end: 22 }, // Segunda a Sexta: 15:00 a 22:00
+            WEEKEND: { start: 9, end: 20 }   // Sábado e Domingo: 09:00 às 20:00
+        };
+
+        // Lista de Serviços (Organizados e Listados)
+        const SERVICES = [
+            "Manicure e Pedicure - Normal",
+            "Manicure e Pedicure - Semi-permanente",
+            "Extensão de Cílios - Carga Leve",
+            "Extensão de Cílios - Mediano",
+            "Extensão de Cílios - Carga Total",
+            "Design de Sobrancelhas - Com Henna",
+            "Design de Sobrancelhas - Com Tinta",
+            "Maquiagem Profissional - Com Cílios",
+            "Maquiagem Profissional - Sem Cílios",
+            "Tratamento Capilar - Lavado e Secado",
+            "Tratamento Capilar - Com Hidratação",
+            "Laminado de Sobrancelhas",
+            "Lifting de Cílios",
+        ];
+
+        // --- REFERÊNCIAS DE ELEMENTOS DO DOM ---
+        const form = document.getElementById('scheduling-form');
+        const serviceSelect = document.getElementById('service');
+        const dateInput = document.getElementById('date');
+        const timeSelect = document.getElementById('time');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const hoursInfo = document.getElementById('hours-info');
+        const messageBox = document.getElementById('message-box');
+
+        // --- FUNÇÕES DE UTILIDADE ---
+
+        /**
+         * Exibe uma mensagem de notificação (Erro ou Sucesso).
+         * @param {string} message - A mensagem a ser exibida.
+         * @param {string} type - 'success' ou 'error'.
+         */
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.className = 'mt-4 p-3 rounded-lg text-sm transition-all duration-300 border';
+            messageBox.classList.remove('hidden');
+
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700', 'border-red-300');
+            } else {
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'border-green-300');
+            }
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 6000);
+        }
+
+        /**
+         * Gera slots de 30 em 30 minutos dentro de um intervalo.
+         * @param {number} startHour - Hora de início (0-23).
+         * @param {number} endHour - Hora de fim (0-23).
+         * @returns {string[]} - Array de strings de horário (e.g., "15:00").
+         */
+        function generateTimeSlots(startHour, endHour) {
+            const slots = [];
+            let currentHour = startHour;
+            let currentMinute = 0;
+
+            // O loop deve ir até a hora anterior ao fim (pois o fim é o limite, o último agendamento deve começar 30 minutos antes do 'end')
+            while (currentHour * 60 + currentMinute < endHour * 60) {
+                const hourStr = String(currentHour).padStart(2, '0');
+                const minuteStr = String(currentMinute).padStart(2, '0');
+                slots.push(`${hourStr}:${minuteStr}`);
+
+                // Avança 30 minutos
+                currentMinute += 30;
+                if (currentMinute === 60) {
+                    currentMinute = 0;
+                    currentHour++;
+                }
+            }
+            return slots;
+        }
+
+        /**
+         * Preenche o campo de Horário baseado na data selecionada.
+         */
+        function populateTimeSlots() {
+            const selectedDateValue = dateInput.value;
+            timeSelect.innerHTML = '<option value="" disabled selected>Selecione um Horário</option>';
+            timeSelect.disabled = true;
+            timeSelect.classList.add('bg-gray-100', 'cursor-not-allowed');
+            timeSelect.classList.remove('bg-white', 'cursor-pointer');
+            hoursInfo.classList.add('hidden');
+
+            if (!selectedDateValue) return;
+
+            // A data nativa do input é no formato YYYY-MM-DD
+            const selectedDate = new Date(selectedDateValue + 'T00:00:00'); 
+            const dayOfWeek = selectedDate.getDay(); // 0 (Domingo) a 6 (Sábado)
+
+            let rules;
+            let rulesText;
+
+            // 1-5 é Segunda a Sexta (WEEKDAY)
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+                rules = BUSINESS_HOURS.WEEKDAY;
+                rulesText = `Horários: Segunda a Sexta, das ${rules.start}:00 às ${rules.end}:00`;
+            } 
+            // 0 é Domingo, 6 é Sábado (WEEKEND)
+            else if (dayOfWeek === 0 || dayOfWeek === 6) {
+                rules = BUSINESS_HOURS.WEEKEND;
+                rulesText = `Horários: Sábado e Domingo, das ${rules.start}:00 às ${rules.end}:00`;
+            } else {
+                return;
+            }
+
+            const slots = generateTimeSlots(rules.start, rules.end);
+
+            if (slots.length === 0) {
+                timeSelect.innerHTML = '<option value="" disabled selected>Nenhum horário disponível neste dia.</option>';
+                hoursInfo.textContent = 'Não há horários disponíveis para agendamento.';
+                hoursInfo.classList.remove('hidden');
+            } else {
+                slots.forEach(slot => {
+                    const option = document.createElement('option');
+                    option.value = slot;
+                    option.textContent = slot;
+                    timeSelect.appendChild(option);
+                });
+                
+                timeSelect.disabled = false;
+                timeSelect.classList.remove('bg-gray-100', 'cursor-not-allowed');
+                timeSelect.classList.add('bg-white', 'cursor-pointer');
+                hoursInfo.textContent = rulesText;
+                hoursInfo.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Inicializa o formulário: Preenche serviços e configura a data mínima.
+         */
+        function initializeForm() {
+            // 1. Preenche o Dropdown de Serviços
+            SERVICES.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service;
+                option.textContent = service;
+                serviceSelect.appendChild(option);
+            });
+
+            // 2. Configura a Data Mínima (apenas hoje ou datas futuras)
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            dateInput.min = `${year}-${month}-${day}`;
+            
+            // 3. Adiciona Listeners
+            dateInput.addEventListener('change', populateTimeSlots);
+            form.addEventListener('submit', handleFormSubmit);
+        }
+        
+        /**
+         * Manipula o envio do formulário, criando e abrindo o link do WhatsApp.
+         * @param {Event} e - O evento de submissão do formulário.
+         */
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const service = serviceSelect.value;
+            const date = dateInput.value;
+            const time = timeSelect.value;
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+
+            if (!service || !date || !time || !name || !phone) {
+                showMessage("Por favor, preencha todos os campos do agendamento.", 'error');
+                return;
+            }
+
+            // Formatação da mensagem
+            const message = `Olá! Gostaria de agendar um horário.
+            
+*Detalhes do Agendamento:*
+*Nome:* ${name}
+*Telefone:* ${WHATSAPP_CODE} ${phone}
+*Serviço:* ${service}
+*Data:* ${date.split('-').reverse().join('/')}
+*Horário:* ${time}
+            
+Por favor, confirme a disponibilidade e o valor total do serviço. Obrigado(a)!`;
+            
+            // Codifica a mensagem para o URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Cria o link do WhatsApp
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodedMessage}`;
+
+            // Abre o link em uma nova aba
+            window.open(whatsappUrl, '_blank');
+
+            showMessage("Agendamento enviado! Redirecionando para o WhatsApp para confirmação...", 'success');
+            
+            // Opcional: Limpar o formulário após o envio
+            // form.reset();
+            // populateTimeSlots(); 
+        }
+
+        // Inicia a aplicação
+        initializeForm();
+        
+    </script>
+</body>
+</html>
+
