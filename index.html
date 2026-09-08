@@ -13,7 +13,8 @@ body{margin:0;background:radial-gradient(circle at top,#fffaf0 0,#fbf5e6 48%,#f6
 .wrapper{width:min(100% - 28px,520px);margin:0 auto;padding:22px 0 34px}
 .brand{text-align:center;padding:8px 8px 18px}.brand-mark{width:78px;height:78px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);box-shadow:0 8px 24px #4b2a1a18}.brand h1{font-family:Georgia,serif;font-size:30px;line-height:1.05;margin:12px 0 5px;color:var(--brown)}.brand p{margin:0;color:var(--brown2);font-size:13px;letter-spacing:.16em;text-transform:uppercase}
 .card{background:rgba(255,250,240,.94);border:1px solid var(--line);border-radius:24px;box-shadow:0 14px 38px #4b2a1a12;overflow:hidden}.hero{padding:24px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}.hero h2{font-family:Georgia,serif;font-size:26px;margin:0 0 7px}.hero .sub{margin:0;color:#765b4c;font-size:14px;line-height:1.5}
-.form{padding:0 24px 24px}.field{margin-top:16px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input,.field select{width:100%;height:48px;border:1px solid #d9b98b;border-radius:13px;background:#fff;color:var(--brown);padding:0 14px;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c57a2a20}.hint{font-size:11px;color:#866e60;margin:5px 2px 0}.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.service{position:relative}.service input{position:absolute;opacity:0;pointer-events:none}.service label{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px;border:1px solid #d9b98b;border-radius:13px;background:#fff;cursor:pointer;text-align:center;font-weight:700;font-size:13px;margin:0}.service input:checked+label{background:var(--brown);border-color:var(--brown);color:#fff}
+.form{padding:0 24px 24px}.field{margin-top:16px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input,.field select{width:100%;height:48px;border:1px solid #d9b98b;border-radius:13px;background:#fff;color:var(--brown);padding:0 14px;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c57a2a20}.hint{font-size:11px;color:#866e60;margin:5px 2px 0}.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.service-section-title{margin-top:16px;margin-bottom:9px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.secondary-title{margin-top:22px}.service{position:relative}.service input{position:absolute;opacity:0;pointer-events:none}.service label{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px;border:1px solid #d9b98b;border-radius:13px;background:#fff;cursor:pointer;text-align:center;font-weight:700;font-size:13px;margin:0}.service input:checked+label{background:var(--brown);border-color:var(--brown);color:#fff}
 .actions{margin-top:20px}.btn{width:100%;min-height:52px;border:0;border-radius:15px;background:linear-gradient(135deg,#c57a2a,#a95f1d);color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 9px 20px #a95f1d25}.btn:active{transform:translateY(1px)}.status{display:none;margin-top:13px;padding:13px;border-radius:13px;background:var(--soft);font-size:13px;line-height:1.45}.status.show{display:block}.links{text-align:center;padding:0 24px 22px}.links a{color:var(--gold);font-weight:700;text-decoration:none}.footer{text-align:center;margin:18px 0 0;font-size:12px;color:#866e60}.footer strong{color:var(--brown)}
 .modal{display:none;position:fixed;inset:0;background:#2c180d66;align-items:flex-end;justify-content:center;padding:14px;z-index:10}.modal.show{display:flex}.modal-box{width:min(100%,520px);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 20px 60px #0003}.modal-box h3{font-family:Georgia,serif;margin:0 0 10px;font-size:23px}.summary{background:#fff;border:1px solid #ead4b1;border-radius:14px;padding:14px;font-size:14px;line-height:1.7}.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.secondary{border:1px solid #d9b98b;background:#fff;color:var(--brown);border-radius:13px;min-height:48px;font-weight:700}.primary{border:0;background:var(--brown);color:#fff;border-radius:13px;min-height:48px;font-weight:700}
 @media(max-width:380px){.wrapper{width:min(100% - 18px,520px)}.form,.hero,.links{padding-left:17px;padding-right:17px}.service-grid{grid-template-columns:1fr}.brand h1{font-size:27px}}
@@ -46,13 +47,29 @@ body{margin:0;background:radial-gradient(circle at top,#fffaf0 0,#fbf5e6 48%,#f6
         <div class="hint">Ex.: +595 982 644 359</div>
       </div>
 
+      
+      
       <div class="field">
-        <label>Serviço</label>
+        <label>Servicio</label>
+
+        <div class="service-section-title">Servicios destacados</div>
         <div class="service-grid">
-          <div class="service"><input id="s1" name="servico" type="radio" value="Escova" required><label for="s1">Escova</label></div>
-          <div class="service"><input id="s2" name="servico" type="radio" value="Coloração"><label for="s2">Coloração</label></div>
-          <div class="service"><input id="s3" name="servico" type="radio" value="Manicure"><label for="s3">Manicure</label></div>
-          <div class="service"><input id="s4" name="servico" type="radio" value="Outro serviço"><label for="s4">Outro serviço</label></div>
+          <div class="service"><input id="s1" name="servicio" type="radio" value="Micro pigmentación de Labios" required><label for="s1">Micro pigmentación de Labios</label></div>
+          <div class="service"><input id="s2" name="servicio" type="radio" value="Micro pigmentación de Cejas"><label for="s2">Micro pigmentación de Cejas</label></div>
+          <div class="service"><input id="s3" name="servicio" type="radio" value="Neutralización de Labios"><label for="s3">Neutralización de Labios</label></div>
+          <div class="service"><input id="s4" name="servicio" type="radio" value="Extensión de Pestañas"><label for="s4">Extensión de Pestañas</label></div>
+          <div class="service"><input id="s5" name="servicio" type="radio" value="Depilación"><label for="s5">Depilación</label></div>
+        </div>
+
+        <div class="service-section-title secondary-title">Otros servicios</div>
+        <div class="service-grid">
+          <div class="service"><input id="s6" name="servicio" type="radio" value="Laminado de Cejas"><label for="s6">Laminado de Cejas</label></div>
+          <div class="service"><input id="s7" name="servicio" type="radio" value="Lifting de Pestañas"><label for="s7">Lifting de Pestañas</label></div>
+          <div class="service"><input id="s8" name="servicio" type="radio" value="Diseño de Cejas"><label for="s8">Diseño de Cejas</label></div>
+          <div class="service"><input id="s9" name="servicio" type="radio" value="Diseño de Cejas con Henna"><label for="s9">Diseño de Cejas con Henna</label></div>
+          <div class="service"><input id="s10" name="servicio" type="radio" value="Diseño de Cejas con Tinte"><label for="s10">Diseño de Cejas con Tinte</label></div>
+          <div class="service"><input id="s11" name="servicio" type="radio" value="Servicio de Manicura"><label for="s11">Servicio de Manicura</label></div>
+          <div class="service"><input id="s12" name="servicio" type="radio" value="Servicio de Pedicure"><label for="s12">Servicio de Pedicure</label></div>
         </div>
       </div>
 
@@ -117,7 +134,7 @@ body{margin:0;background:radial-gradient(circle at top,#fffaf0 0,#fbf5e6 48%,#f6
     status.classList.remove('show');
     const nome=document.getElementById('nome').value.trim();
     const telefone=phone.value.trim();
-    const servico=document.querySelector('input[name="servico"]:checked');
+    const servico=document.querySelector('input[name="servicio"]:checked');
     const data=date.value;
     const hora=document.getElementById('hora').value;
     if(nome.length<2){return showError('Digite seu nome completo.','nome')}
@@ -137,7 +154,7 @@ body{margin:0;background:radial-gradient(circle at top,#fffaf0 0,#fbf5e6 48%,#f6
   whatsBtn.addEventListener('click',function(){
     const nome=document.getElementById('nome').value.trim();
     const telefone=phone.value.trim();
-    const servico=document.querySelector('input[name="servico"]:checked').value;
+    const servico=document.querySelector('input[name="servicio"]:checked').value;
     const texto='Novo agendamento%0A%0ANome: '+encodeURIComponent(nome)+'%0ACelular: '+encodeURIComponent(telefone)+'%0AServiço: '+encodeURIComponent(servico)+'%0AData: '+encodeURIComponent(formatDate(date.value))+'%0AHorário: '+encodeURIComponent(document.getElementById('hora').value);
     window.location.href='https://wa.me/'+destination+'?text='+texto;
   });
