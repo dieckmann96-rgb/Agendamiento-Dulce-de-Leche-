@@ -4,103 +4,382 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fbf5e6">
-<meta name="description" content="Agenda online de Dulce de Leche Beauty Studio">
 <title>Dulce de Leche Beauty Studio — Reservas</title>
 <style>
-:root{--bg:#fbf5e6;--card:#fffaf0;--white:#fff;--brown:#4b2a1a;--brown2:#765b4c;--gold:#c57a2a;--gold2:#a95f1d;--line:#d9b98b;--soft:#f5ead8;--ok:#eaf5e9;--danger:#fff0ed}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at top,#fffdf7 0,#fbf5e6 48%,#f7eddc 100%);font-family:Arial,Helvetica,sans-serif;color:var(--brown);min-height:100vh}.wrapper{width:min(100% - 20px,540px);margin:auto;padding:18px 0 30px}.brand{text-align:center;padding:4px 8px 16px}.brand-mark{width:82px;height:82px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);box-shadow:0 8px 24px #4b2a1a18}.brand h1{font-family:Georgia,serif;font-size:29px;line-height:1.05;margin:12px 0 5px}.brand p{margin:0;color:var(--brown2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}.card{background:rgba(255,250,240,.97);border:1px solid var(--line);border-radius:24px;box-shadow:0 14px 38px #4b2a1a12;overflow:hidden}.hero{padding:23px 23px 17px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}.hero h2{font-family:Georgia,serif;font-size:27px;margin:0 0 7px}.sub{margin:0;color:var(--brown2);font-size:14px;line-height:1.5}.trust{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.trust span{background:var(--soft);border-radius:999px;padding:7px 10px;font-size:11px;font-weight:700;color:var(--brown2)}.form{padding:0 23px 24px}.field{margin-top:16px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field input,.field select{width:100%;height:50px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--brown);padding:0 14px;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c57a2a20}.hint{font-size:11px;color:#866e60;margin:5px 2px 0}.section-title{font-size:13px;font-weight:800;margin:22px 0 9px}.category{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin:18px 0 8px}.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.service{position:relative}.service input{position:absolute;opacity:0;pointer-events:none}.service label{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:66px;padding:10px;border:1px solid var(--line);border-radius:13px;background:#fff;cursor:pointer;text-align:center;font-weight:700;font-size:12px;line-height:1.2;transition:.18s}.service label small{margin-top:5px;color:#977a68;font-size:10px;font-weight:600}.service input:checked+label{background:var(--brown);border-color:var(--brown);color:#fff;transform:translateY(-1px);box-shadow:0 7px 15px #4b2a1a18}.service input:checked+label small{color:#f7e8d5}.date-summary{display:none;margin-top:9px;background:var(--soft);border-radius:12px;padding:10px 11px;font-size:12px;line-height:1.45;color:var(--brown2)}.date-summary.show{display:block}.time-note{font-size:12px;color:var(--brown2);background:var(--soft);border-radius:11px;padding:10px 11px;margin-top:9px;display:none}.time-note.show{display:block}.actions{margin-top:20px}.btn{width:100%;min-height:53px;border:0;border-radius:15px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 9px 20px #a95f1d25}.btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}.status{display:none;margin-top:13px;padding:13px;border-radius:13px;background:var(--soft);font-size:13px;line-height:1.45}.status.show{display:block}.status.ok{background:var(--ok)}.status.error{background:var(--danger)}.links{display:grid;gap:8px;text-align:center;padding:0 23px 22px;font-size:12px;color:var(--brown2)}.links a{color:var(--gold);font-weight:800;text-decoration:none}.footer{text-align:center;margin:17px 0 0;font-size:12px;color:#866e60}.footer strong{color:var(--brown)}.modal{position:fixed;inset:0;background:#2d1a1090;display:none;align-items:center;justify-content:center;padding:16px;z-index:10}.modal.show{display:flex}.modal-card{width:min(100%,450px);max-height:92vh;overflow:auto;background:var(--card);border-radius:24px;border:1px solid var(--line);padding:23px;box-shadow:0 25px 60px #0004}.modal-card h3{font-family:Georgia,serif;font-size:27px;margin:0 0 8px}.success{font-size:13px;color:var(--brown2);margin-bottom:10px}.summary{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:14px;line-height:1.75;margin:14px 0}.modal-actions{display:grid;gap:9px}.btn.secondary{background:var(--brown)}.btn.light{background:#fff;color:var(--brown);border:1px solid var(--line);box-shadow:none}.small{font-size:11px;color:#866e60;margin-top:10px;line-height:1.45}.calendar-btn{display:none}.calendar-btn.show{display:block}.spinner{display:inline-block;width:14px;height:14px;border:2px solid #ffffff80;border-top-color:#fff;border-radius:50%;vertical-align:-2px;margin-right:6px;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:390px){.wrapper{width:min(100% - 14px,540px)}.form,.hero,.links{padding-left:16px;padding-right:16px}.service-grid{grid-template-columns:1fr}.brand h1{font-size:27px}.hero h2{font-size:24px}}
+:root{
+  --bg:#fbf5e6;--card:#fffaf0;--white:#fff;--brown:#4b2a1a;--brown2:#765b4c;
+  --gold:#c57a2a;--gold2:#a95f1d;--line:#d9b98b;--soft:#f5ead8;--ok:#eaf5e9;--danger:#fff0ed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#fffdf7 0,#fbf5e6 48%,#f7eddc 100%);
+font-family:Arial,Helvetica,sans-serif;color:var(--brown);min-height:100vh}
+.wrapper{width:min(100% - 24px,520px);margin:0 auto;padding:22px 0 30px}
+.brand{text-align:center;padding:4px 8px 18px}
+.brand-mark{width:82px;height:82px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);box-shadow:0 8px 24px #4b2a1a18}
+.brand h1{font-family:Georgia,serif;font-size:29px;line-height:1.05;margin:12px 0 5px}
+.brand p{margin:0;color:var(--brown2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.card{background:rgba(255,250,240,.96);border:1px solid var(--line);border-radius:24px;box-shadow:0 14px 38px #4b2a1a12;overflow:hidden}
+.hero{padding:24px 24px 18px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.hero h2{font-family:Georgia,serif;font-size:26px;margin:0 0 7px}
+.sub{margin:0;color:var(--brown2);font-size:14px;line-height:1.5}
+.form{padding:0 24px 24px}
+.field{margin-top:16px}
+.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}
+.field input,.field select{width:100%;height:48px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--brown);padding:0 14px;font-size:15px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c57a2a20}
+.hint{font-size:11px;color:#866e60;margin:5px 2px 0}
+.section-title{font-size:13px;font-weight:800;margin:22px 0 9px}
+.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.service{position:relative}.service input{position:absolute;opacity:0;pointer-events:none}
+.service label{display:flex;align-items:center;justify-content:center;min-height:52px;padding:10px;border:1px solid var(--line);border-radius:13px;background:#fff;cursor:pointer;text-align:center;font-weight:700;font-size:12px;line-height:1.2}
+.service input:checked+label{background:var(--brown);border-color:var(--brown);color:#fff}
+.category{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin:18px 0 8px}
+.time-note{font-size:12px;color:var(--brown2);background:var(--soft);border-radius:11px;padding:10px 11px;margin-top:9px;display:none}
+.time-note.show{display:block}
+.actions{margin-top:20px}.btn{width:100%;min-height:52px;border:0;border-radius:15px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 9px 20px #a95f1d25}
+.btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+.status{display:none;margin-top:13px;padding:13px;border-radius:13px;background:var(--soft);font-size:13px;line-height:1.45}
+.status.show{display:block}.status.ok{background:var(--ok)}.status.error{background:var(--danger)}
+.links{text-align:center;padding:0 24px 22px;font-size:12px;color:var(--brown2)}
+.links a{color:var(--gold);font-weight:800;text-decoration:none}
+.footer{text-align:center;margin:18px 0 0;font-size:12px;color:#866e60}.footer strong{color:var(--brown)}
+.modal{position:fixed;inset:0;background:#2d1a1090;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.modal.show{display:flex}.modal-card{width:min(100%,440px);background:var(--card);border-radius:22px;border:1px solid var(--line);padding:23px;box-shadow:0 25px 60px #0004}
+.modal-card h3{font-family:Georgia,serif;font-size:23px;margin:0 0 8px}.summary{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:14px;line-height:1.65;margin:14px 0}
+.modal-actions{display:grid;gap:9px}.btn.secondary{background:var(--brown)}.btn.light{background:#fff;color:var(--brown);border:1px solid var(--line);box-shadow:none}
+.small{font-size:11px;color:#866e60;margin-top:10px;line-height:1.45}
+@media(max-width:380px){.wrapper{width:min(100% - 18px,520px)}.form,.hero,.links{padding-left:17px;padding-right:17px}.service-grid{grid-template-columns:1fr}.brand h1{font-size:27px}}
 </style>
 </head>
 <body>
 <div class="wrapper">
   <div class="brand">
     <img class="brand-mark" src="logo.jpg" alt="Dulce de Leche Beauty Studio">
-    <h1>Dulce de Leche</h1><p>Beauty Studio</p>
+    <h1>Dulce de Leche</h1>
+    <p>Beauty Studio</p>
   </div>
+
   <div class="card">
     <div class="hero">
       <div class="eyebrow">Agenda online</div>
       <h2>Reserva tu cita</h2>
-      <p class="sub">Elige tu procedimiento, fecha y horario. La disponibilidad se comprueba en tiempo real antes de confirmar.</p>
-      <div class="trust"><span>✓ Horarios actualizados</span><span>✓ Reserva segura</span><span>✓ Confirmación por WhatsApp</span></div>
+      <p class="sub">Elige tu procedimiento, fecha y horario. Los horarios se actualizan según la agenda real del Studio.</p>
     </div>
+
     <form class="form" id="bookingForm" novalidate>
-      <div class="field"><label for="nome">Nombre completo</label><input id="nome" name="nome" type="text" autocomplete="name" placeholder="Tu nombre completo" required></div>
-      <div class="field"><label for="telefone">WhatsApp</label><input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+595 9XX XXX XXX" required><div class="hint">Ejemplo: +595 982 644 359</div></div>
+      <div class="field">
+        <label for="nome">Nombre completo</label>
+        <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Tu nombre" required>
+      </div>
+
+      <div class="field">
+        <label for="telefone">WhatsApp</label>
+        <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+595 9XX XXX XXX" required>
+        <div class="hint">Usa tu número de WhatsApp para recibir la confirmación.</div>
+      </div>
+
+      <div class="field">
+        <label for="tipoDocumento">Documento para facturación</label>
+        <select id="tipoDocumento" name="tipoDocumento" required>
+          <option value="">Selecciona C.I. o RUC</option>
+          <option value="CI">C.I. / Cédula de Identidad</option>
+          <option value="RUC">RUC</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="documento">Número de documento</label>
+        <input id="documento" name="documento" type="text" inputmode="text" autocomplete="off" placeholder="Ej.: 4.567.890 o 80012345-6" required>
+        <div class="hint">Lo usaremos para facilitar la emisión de tu factura.</div>
+      </div>
 
       <div class="section-title">Selecciona tu procedimiento</div>
+
       <div class="category">Destacados</div>
       <div class="service-grid">
-        <div class="service"><input id="s1" name="servico" type="radio" value="Micro pigmentación de Labios"><label for="s1">Micro pigmentación de Labios<small>120 min</small></label></div>
-        <div class="service"><input id="s2" name="servico" type="radio" value="Micro pigmentación de Cejas"><label for="s2">Micro pigmentación de Cejas<small>150 min</small></label></div>
-        <div class="service"><input id="s3" name="servico" type="radio" value="Neutralización de Labios"><label for="s3">Neutralización de Labios<small>120 min</small></label></div>
-        <div class="service"><input id="s4" name="servico" type="radio" value="Extensión de Pestañas"><label for="s4">Extensión de Pestañas<small>120 min</small></label></div>
-        <div class="service"><input id="s5" name="servico" type="radio" value="Depilación"><label for="s5">Depilación<small>30 min</small></label></div>
-      </div>
-      <div class="category">Otros servicios</div>
-      <div class="service-grid">
-        <div class="service"><input id="s6" name="servico" type="radio" value="Laminado de Cejas"><label for="s6">Laminado de Cejas<small>60 min</small></label></div>
-        <div class="service"><input id="s7" name="servico" type="radio" value="Lifting de Pestañas"><label for="s7">Lifting de Pestañas<small>60 min</small></label></div>
-        <div class="service"><input id="s8" name="servico" type="radio" value="Diseño de Cejas"><label for="s8">Diseño de Cejas<small>45 min</small></label></div>
-        <div class="service"><input id="s9" name="servico" type="radio" value="Diseño de Cejas con Henna"><label for="s9">Diseño de Cejas con Henna<small>60 min</small></label></div>
-        <div class="service"><input id="s10" name="servico" type="radio" value="Diseño de Cejas con Tinte"><label for="s10">Diseño de Cejas con Tinte<small>60 min</small></label></div>
-        <div class="service"><input id="s11" name="servico" type="radio" value="Servicio de Manicura"><label for="s11">Servicio de Manicura<small>60 min</small></label></div>
-        <div class="service"><input id="s12" name="servico" type="radio" value="Servicio de Pedicure"><label for="s12">Servicio de Pedicure<small>60 min</small></label></div>
+        <div class="service"><input id="s1" name="servico" type="radio" value="Micro pigmentación de Labios"><label for="s1">Micro pigmentación de Labios</label></div>
+        <div class="service"><input id="s2" name="servico" type="radio" value="Micro pigmentación de Cejas"><label for="s2">Micro pigmentación de Cejas</label></div>
+        <div class="service"><input id="s3" name="servico" type="radio" value="Neutralización de Labios"><label for="s3">Neutralización de Labios</label></div>
+        <div class="service"><input id="s4" name="servico" type="radio" value="Extensión de Pestañas"><label for="s4">Extensión de Pestañas</label></div>
+        <div class="service"><input id="s5" name="servico" type="radio" value="Depilación"><label for="s5">Depilación</label></div>
       </div>
 
-      <div class="field"><label for="data">Fecha</label><input id="data" name="data" type="date" required><div class="hint">Domingo cerrado · Lun–Vie 14:00–20:00 · Sábado 09:00–20:00.</div><div class="date-summary" id="dateSummary"></div></div>
-      <div class="field"><label for="hora">Horario disponible</label><select id="hora" name="hora" required disabled><option value="">Primero selecciona procedimiento y fecha</option></select><div class="time-note" id="timeNote"></div></div>
-      <div class="actions"><button class="btn" id="submitBtn" type="submit">Confirmar reserva</button></div>
+      <div class="category">Otros servicios</div>
+      <div class="service-grid">
+        <div class="service"><input id="s6" name="servico" type="radio" value="Laminado de Cejas"><label for="s6">Laminado de Cejas</label></div>
+        <div class="service"><input id="s7" name="servico" type="radio" value="Lifting de Pestañas"><label for="s7">Lifting de Pestañas</label></div>
+        <div class="service"><input id="s8" name="servico" type="radio" value="Diseño de Cejas"><label for="s8">Diseño de Cejas</label></div>
+        <div class="service"><input id="s9" name="servico" type="radio" value="Diseño de Cejas con Henna"><label for="s9">Diseño de Cejas con Henna</label></div>
+        <div class="service"><input id="s10" name="servico" type="radio" value="Diseño de Cejas con Tinte"><label for="s10">Diseño de Cejas con Tinte</label></div>
+        <div class="service"><input id="s11" name="servico" type="radio" value="Servicio de Manicura"><label for="s11">Servicio de Manicura</label></div>
+        <div class="service"><input id="s12" name="servico" type="radio" value="Servicio de Pedicure"><label for="s12">Servicio de Pedicure</label></div>
+      </div>
+
+      <div class="field">
+        <label for="data">Fecha</label>
+        <input id="data" name="data" type="date" required>
+        <div class="hint">Domingo cerrado. Lun–Vie 14:00–20:00 · Sábado 09:00–20:00.</div>
+      </div>
+
+      <div class="field">
+        <label for="hora">Horario disponible</label>
+        <select id="hora" name="hora" required disabled>
+          <option value="">Primero selecciona procedimiento y fecha</option>
+        </select>
+        <div class="time-note" id="timeNote"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="submitBtn" type="submit">Confirmar reserva</button>
+      </div>
       <div class="status" id="status"></div>
     </form>
-    <div class="links"><div>¿Necesitas ayuda? <a href="https://wa.me/595982644359" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></div><div>Instagram: <a href="https://www.instagram.com/" target="_blank" rel="noopener">Dulce de Leche Beauty Studio</a></div></div>
+
+    <div class="links">
+      Instagram: <a href="https://www.instagram.com/" target="_blank" rel="noopener">Dulce de Leche Beauty Studio</a>
+    </div>
   </div>
+
   <div class="footer">Agenda online de <strong>Dulce de Leche Beauty Studio</strong></div>
 </div>
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-card">
-    <h3>Reserva confirmada ✨</h3>
-    <div class="success">Tu horario quedó registrado correctamente en la agenda del Studio.</div>
+    <h3 id="modalTitle">Reserva confirmada ✨</h3>
     <div class="summary" id="summary"></div>
     <div class="modal-actions">
       <button class="btn" id="whatsBtn" type="button">Enviar confirmación por WhatsApp</button>
-      <button class="btn secondary calendar-btn" id="calendarBtn" type="button">Agregar a mi calendario</button>
       <button class="btn light" id="editBtn" type="button">Volver a editar</button>
     </div>
-    <div class="small">Si necesitas cambiar tu cita, escríbenos por WhatsApp antes de tu horario.</div>
+    <div class="small">La reserva queda registrada en la agenda del Studio cuando el sistema confirma el horario.</div>
   </div>
 </div>
 
 <script>
+const API_URL='https://script.google.com/macros/s/AKfycbyILLjW-gTPjUSMG-MaSSXK3hZT9voml0FqLeCZb4NBJ2xk6EV80XMu2eKdHNWbF5JuFQ/exec';
 const WHATSAPP='595982644359';
-const DURACIONES={
-  'Micro pigmentación de Labios':120,'Micro pigmentación de Cejas':150,'Neutralización de Labios':120,'Extensión de Pestañas':120,'Depilación':30,
-  'Laminado de Cejas':60,'Lifting de Pestañas':60,'Diseño de Cejas':45,'Diseño de Cejas con Henna':60,'Diseño de Cejas con Tinte':60,'Servicio de Manicura':60,'Servicio de Pedicure':60
-};
-const form=document.getElementById('bookingForm'),dateEl=document.getElementById('data'),timeEl=document.getElementById('hora'),statusEl=document.getElementById('status'),submitBtn=document.getElementById('submitBtn'),timeNote=document.getElementById('timeNote'),dateSummary=document.getElementById('dateSummary'),modal=document.getElementById('modal'),summary=document.getElementById('summary'),whatsBtn=document.getElementById('whatsBtn'),calendarBtn=document.getElementById('calendarBtn'),editBtn=document.getElementById('editBtn');
-let lastBooking=null,requestSeq=0;
+
+const form=document.getElementById('bookingForm');
+const dateEl=document.getElementById('data');
+const timeEl=document.getElementById('hora');
+const statusEl=document.getElementById('status');
+const submitBtn=document.getElementById('submitBtn');
+const timeNote=document.getElementById('timeNote');
+const modal=document.getElementById('modal');
+const summary=document.getElementById('summary');
+const whatsBtn=document.getElementById('whatsBtn');
+const editBtn=document.getElementById('editBtn');
+
+let lastBooking=null;
+let requestSeq=0;
+
 function pad(n){return String(n).padStart(2,'0')}
-function todayISO(){const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
-function formatDate(v){if(!v)return '';const [y,m,d]=v.split('-');return d+'/'+m+'/'+y}
-function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-function selectedService(){return document.querySelector('input[name="servico"]:checked')?.value||''}
-function setStatus(msg,type=''){statusEl.textContent=msg;statusEl.className='status show '+type}
-function clearStatus(){statusEl.textContent='';statusEl.className='status'}
-function validDate(v){if(!v)return false;const d=new Date(v+'T12:00:00');return d.getDay()!==0}
-function updateDateSummary(){const d=dateEl.value;if(!d){dateSummary.className='date-summary';return}const weekday=new Date(d+'T12:00:00').toLocaleDateString('es-PY',{weekday:'long'});dateSummary.textContent=weekday.charAt(0).toUpperCase()+weekday.slice(1)+' · '+(new Date(d+'T12:00:00').getDay()===6?'Atención de 09:00 a 20:00':'Atención de 14:00 a 20:00');dateSummary.className='date-summary show'}
-async function apiGet(params){const response=await fetch('/api/agenda?'+new URLSearchParams(params),{headers:{Accept:'application/json'},cache:'no-store'});const text=await response.text();let data;try{data=JSON.parse(text)}catch(e){throw new Error('La agenda devolvió una respuesta no válida.')}if(!response.ok)throw new Error(data.mensagem||'No se pudo conectar con la agenda.');return data}
-async function apiPost(data){const response=await fetch('/api/agenda',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data),cache:'no-store'});const text=await response.text();let result;try{result=JSON.parse(text)}catch(e){throw new Error('La agenda devolvió una respuesta no válida.')}if(!response.ok)throw new Error(result.mensagem||'No se pudo conectar con la agenda.');return result}
-async function updateTimes(){const service=selectedService(),date=dateEl.value,id=++requestSeq;timeEl.innerHTML='<option value="">Cargando horarios…</option>';timeEl.disabled=true;timeNote.textContent='';timeNote.className='time-note';clearStatus();if(!service||!date){timeEl.innerHTML='<option value="">Primero selecciona procedimiento y fecha</option>';return}if(!validDate(date)){timeEl.innerHTML='<option value="">Elige una fecha de lunes a sábado</option>';timeNote.textContent='Los domingos el Studio está cerrado.';timeNote.className='time-note show';return}try{const data=await apiGet({acao:'disponibilidade',data:date,servico:service});if(id!==requestSeq)return;if(data.status!=='ok')throw new Error(data.mensagem||'No se pudieron cargar los horarios.');const horarios=Array.isArray(data.horarios)?data.horarios:[];timeEl.innerHTML='';if(!horarios.length){timeEl.innerHTML='<option value="">No hay horarios disponibles</option>';timeNote.textContent='No hay disponibilidad para este procedimiento y fecha.';timeNote.className='time-note show';return}const p=document.createElement('option');p.value='';p.textContent='Selecciona un horario';p.disabled=true;p.selected=true;timeEl.appendChild(p);horarios.forEach(h=>{const o=document.createElement('option');o.value=h;o.textContent=h;timeEl.appendChild(o)});timeEl.disabled=false;timeNote.textContent=`${horarios.length} horario${horarios.length===1?'':'s'} disponible${horarios.length===1?'':'s'}. La disponibilidad se comprueba nuevamente al confirmar.`;timeNote.className='time-note show'}catch(err){if(id!==requestSeq)return;timeEl.innerHTML='<option value="">No se pudieron cargar los horarios</option>';timeNote.textContent=err.message||'No fue posible consultar la agenda.';timeNote.className='time-note show';setStatus(err.message||'No fue posible consultar la agenda.','error')}}
+function todayISO(){
+  const d=new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+function formatDate(v){
+  if(!v)return '';
+  const [y,m,d]=v.split('-');
+  return d+'/'+m+'/'+y;
+}
+function escapeHtml(s){
+  return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function selectedService(){
+  return document.querySelector('input[name="servico"]:checked')?.value || '';
+}
+function setStatus(msg,type=''){
+  statusEl.textContent=msg;
+  statusEl.className='status show '+type;
+}
+function clearStatus(){
+  statusEl.textContent='';
+  statusEl.className='status';
+}
+function validDate(v){
+  if(!v)return false;
+  const d=new Date(v+'T12:00:00');
+  const day=d.getDay();
+  return day!==0;
+}
+async function apiGet(params){
+  const query=new URLSearchParams(params).toString();
+  const response=await fetch('/api/agenda?'+query,{method:'GET',headers:{'Accept':'application/json'}});
+  const text=await response.text();
+  let data;
+  try{data=JSON.parse(text)}catch(e){throw new Error('La agenda devolvió una respuesta no válida.')}
+  if(!response.ok)throw new Error(data.mensagem||'No se pudo conectar con la agenda.');
+  return data;
+}
+async function apiPost(data){
+  const response=await fetch('/api/agenda',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(data)
+  });
+  const text=await response.text();
+  let result;
+  try{result=JSON.parse(text)}catch(e){throw new Error('La agenda devolvió una respuesta no válida.')}
+  if(!response.ok)throw new Error(result.mensagem||'No se pudo conectar con la agenda.');
+  return result;
+}
 
-document.querySelectorAll('input[name="servico"]').forEach(el=>el.addEventListener('change',updateTimes));dateEl.addEventListener('change',()=>{updateDateSummary();updateTimes()});dateEl.min=todayISO();updateDateSummary();
+async function updateTimes(){
+  const service=selectedService();
+  const date=dateEl.value;
+  const requestId=++requestSeq;
 
-form.addEventListener('submit',async e=>{e.preventDefault();clearStatus();const nome=document.getElementById('nome').value.trim(),telefone=document.getElementById('telefone').value.trim(),servico=selectedService(),data=dateEl.value,hora=timeEl.value;if(nome.length<2)return setStatus('Informe su nombre completo.','error');const digits=telefone.replace(/\D/g,'');if(!/^595?9\d{8}$/.test(digits)&&!/^9\d{8}$/.test(digits))return setStatus('Ingrese un número de WhatsApp paraguayo válido. Ejemplo: +595 982 644 359.','error');if(!servico)return setStatus('Seleccione el procedimiento deseado.','error');if(!validDate(data))return setStatus('Elija una fecha de lunes a sábado.','error');if(!hora)return setStatus('Seleccione un horario disponible.','error');submitBtn.disabled=true;submitBtn.innerHTML='<span class="spinner"></span>Confirmando…';setStatus('Comprobando nuevamente el horario y registrando tu reserva…');try{const result=await apiPost({acao:'reservar',nome,telefone,servico,data,hora});if(result.status!=='ok')throw new Error(result.mensagem||result.message||'Este horario ya no está disponible. Elige otro.');lastBooking={nome,telefone,servico,data,hora,duracao:DURACIONES[servico]||result.duracao||60,fim:result.fim||''};summary.innerHTML='<strong>Nombre:</strong> '+escapeHtml(nome)+'<br><strong>WhatsApp:</strong> '+escapeHtml(telefone)+'<br><strong>Procedimiento:</strong> '+escapeHtml(servico)+'<br><strong>Duración:</strong> '+escapeHtml(String(lastBooking.duracao))+' min<br><strong>Fecha:</strong> '+escapeHtml(formatDate(data))+'<br><strong>Horario:</strong> '+escapeHtml(hora)+(lastBooking.fim?' – '+escapeHtml(lastBooking.fim):'');modal.classList.add('show');modal.setAttribute('aria-hidden','false');calendarBtn.classList.add('show');await updateTimes()}catch(err){setStatus(err.message||'No fue posible confirmar la reserva.','error')}finally{submitBtn.disabled=false;submitBtn.textContent='Confirmar reserva'}});
+  timeEl.innerHTML='<option value="">Cargando horarios…</option>';
+  timeEl.disabled=true;
+  timeNote.textContent='';
 
-whatsBtn.addEventListener('click',()=>{if(!lastBooking)return;const b=lastBooking;const text=`Hola 💕 Quiero confirmar mi reserva en Dulce de Leche Beauty Studio.\n\nNombre: ${b.nome}\nWhatsApp: ${b.telefone}\nProcedimiento: ${b.servico}\nFecha: ${formatDate(b.data)}\nHorario: ${b.hora}${b.fim?' – '+b.fim:''}\n\n¡Gracias! ✨`;window.open('https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(text),'_blank')});
-calendarBtn.addEventListener('click',()=>{if(!lastBooking)return;const b=lastBooking;const start=b.data.replace(/-/g,'')+'T'+b.hora.replace(':','')+'00';const end=b.data.replace(/-/g,'')+'T'+(b.fim?b.fim:b.hora).replace(':','')+'00';const url='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Dulce de Leche — '+b.servico)+'&dates='+start+'/'+end+'&details='+encodeURIComponent('Reserva en Dulce de Leche Beauty Studio.');window.open(url,'_blank')});
-editBtn.addEventListener('click',()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true')});modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true')}});
+  if(!service || !date){
+    timeEl.innerHTML='<option value="">Primero selecciona procedimiento y fecha</option>';
+    return;
+  }
+
+  if(!validDate(date)){
+    timeEl.innerHTML='<option value="">Elige una fecha de lunes a sábado</option>';
+    timeNote.textContent='Los domingos el Studio está cerrado.';
+    return;
+  }
+
+  try{
+    const data=await apiGet({
+      acao:'disponibilidade',
+      data:date,
+      servico:service
+    });
+
+    if(requestId!==requestSeq)return;
+
+    if(data.status!=='ok'){
+      throw new Error(data.mensagem||'No se pudieron cargar los horarios.');
+    }
+
+    const horarios=Array.isArray(data.horarios)?data.horarios:[];
+    timeEl.innerHTML='';
+
+    if(!horarios.length){
+      timeEl.innerHTML='<option value="">No hay horarios disponibles</option>';
+      timeNote.textContent='No hay disponibilidad para este procedimiento y fecha.';
+      return;
+    }
+
+    const placeholder=document.createElement('option');
+    placeholder.value='';
+    placeholder.textContent='Selecciona un horario';
+    placeholder.selected=true;
+    placeholder.disabled=true;
+    timeEl.appendChild(placeholder);
+
+    horarios.forEach(hora=>{
+      const option=document.createElement('option');
+      option.value=hora;
+      option.textContent=hora;
+      timeEl.appendChild(option);
+    });
+
+    timeEl.disabled=false;
+    timeNote.textContent=horarios.length===1
+      ? '1 horario disponible.'
+      : `${horarios.length} horarios disponibles. Se comprueba nuevamente al confirmar.`;
+  }catch(err){
+    if(requestId!==requestSeq)return;
+    timeEl.innerHTML='<option value="">No se pudieron cargar los horarios</option>';
+    timeNote.textContent=err.message||'No fue posible consultar la agenda.';
+    setStatus(err.message||'No fue posible consultar la agenda.','error');
+  }
+}
+
+document.querySelectorAll('input[name="servico"]').forEach(el=>el.addEventListener('change',updateTimes));
+dateEl.addEventListener('change',updateTimes);
+dateEl.min=todayISO();
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  clearStatus();
+
+  const nome=document.getElementById('nome').value.trim();
+  const telefone=document.getElementById('telefone').value.trim();
+  const tipoDocumento=document.getElementById('tipoDocumento').value;
+  const documento=document.getElementById('documento').value.trim();
+  const servico=selectedService();
+  const data=dateEl.value;
+  const hora=timeEl.value;
+
+  if(nome.length<2)return setStatus('Informe seu nombre completo.','error');
+  if(telefone.replace(/\D/g,'').length<8)return setStatus('Informe um número de WhatsApp válido.','error');
+  if(!tipoDocumento)return setStatus('Seleccione C.I. o RUC.','error');
+  if(documento.replace(/[^0-9A-Za-z.-]/g,'').length<3)return setStatus('Informe su número de C.I. o RUC.','error');
+  if(!servico)return setStatus('Selecione o procedimento desejado.','error');
+  if(!validDate(data))return setStatus('Escolha uma data de segunda a sábado.','error');
+  if(!hora)return setStatus('Selecione um horário disponível.','error');
+
+  submitBtn.disabled=true;
+  submitBtn.textContent='Confirmando…';
+  setStatus('Comprobando nuevamente el horario y registrando tu reserva…');
+
+  try{
+    const result=await apiPost({
+      acao:'reservar',
+      nome:nome,
+      telefone:telefone,
+      tipoDocumento:tipoDocumento,
+      documento:documento,
+      servico:servico,
+      data:data,
+      hora:hora
+    });
+
+    if(result.status!=='ok'){
+      throw new Error(result.mensagem||result.message||'Este horario ya no está disponible. Elige otro.');
+    }
+
+    lastBooking={nome,telefone,tipoDocumento,documento,servico,data,hora};
+    summary.innerHTML=
+      '<strong>Nombre:</strong> '+escapeHtml(nome)+
+      '<br><strong>WhatsApp:</strong> '+escapeHtml(telefone)+
+      '<br><strong>Documento:</strong> '+escapeHtml(tipoDocumento+' — '+documento)+
+      '<br><strong>Procedimiento:</strong> '+escapeHtml(servico)+
+      '<br><strong>Fecha:</strong> '+escapeHtml(formatDate(data))+
+      '<br><strong>Horario:</strong> '+escapeHtml(hora);
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    await updateTimes();
+  }catch(err){
+    setStatus(err.message||'No fue posible confirmar la reserva.','error');
+  }finally{
+    submitBtn.disabled=false;
+    submitBtn.textContent='Confirmar reserva';
+  }
+});
+
+whatsBtn.addEventListener('click',()=>{
+  if(!lastBooking)return;
+  const b=lastBooking;
+  const text=
+`Hola 💕 Quiero confirmar mi reserva en Dulce de Leche Beauty Studio.
+
+Nombre: ${b.nome}
+WhatsApp: ${b.telefone}
+Documento: ${b.tipoDocumento} — ${b.documento}
+Procedimiento: ${b.servico}
+Fecha: ${formatDate(b.data)}
+Horario: ${b.hora}
+
+¡Gracias! ✨`;
+  window.open('https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(text),'_blank');
+});
+editBtn.addEventListener('click',()=>{
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+});
+modal.addEventListener('click',e=>{
+  if(e.target===modal)modal.classList.remove('show');
+});
 </script>
 </body>
 </html>
