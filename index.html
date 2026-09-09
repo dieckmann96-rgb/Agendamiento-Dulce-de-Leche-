@@ -211,6 +211,74 @@ async function apiPost(data){
   return result;
 }
 
+async function updateTimes(){
+  const service=selectedService();
+  const date=dateEl.value;
+  const requestId=++requestSeq;
+
+  timeEl.innerHTML='<option value="">Cargando horarios…</option>';
+  timeEl.disabled=true;
+  timeNote.textContent='';
+
+  if(!service || !date){
+    timeEl.innerHTML='<option value="">Primero selecciona procedimiento y fecha</option>';
+    return;
+  }
+
+  if(!validDate(date)){
+    timeEl.innerHTML='<option value="">Elige una fecha de lunes a sábado</option>';
+    timeNote.textContent='Los domingos el Studio está cerrado.';
+    return;
+  }
+
+  try{
+    const data=await apiGet({
+      acao:'disponibilidade',
+      data:date,
+      servico:service
+    });
+
+    if(requestId!==requestSeq)return;
+
+    if(data.status!=='ok'){
+      throw new Error(data.mensagem||'No se pudieron cargar los horarios.');
+    }
+
+    const horarios=Array.isArray(data.horarios)?data.horarios:[];
+    timeEl.innerHTML='';
+
+    if(!horarios.length){
+      timeEl.innerHTML='<option value="">No hay horarios disponibles</option>';
+      timeNote.textContent='No hay disponibilidad para este procedimiento y fecha.';
+      return;
+    }
+
+    const placeholder=document.createElement('option');
+    placeholder.value='';
+    placeholder.textContent='Selecciona un horario';
+    placeholder.selected=true;
+    placeholder.disabled=true;
+    timeEl.appendChild(placeholder);
+
+    horarios.forEach(hora=>{
+      const option=document.createElement('option');
+      option.value=hora;
+      option.textContent=hora;
+      timeEl.appendChild(option);
+    });
+
+    timeEl.disabled=false;
+    timeNote.textContent=horarios.length===1
+      ? '1 horario disponible.'
+      : `${horarios.length} horarios disponibles. Se comprueba nuevamente al confirmar.`;
+  }catch(err){
+    if(requestId!==requestSeq)return;
+    timeEl.innerHTML='<option value="">No se pudieron cargar los horarios</option>';
+    timeNote.textContent=err.message||'No fue posible consultar la agenda.';
+    setStatus(err.message||'No fue posible consultar la agenda.','error');
+  }
+}
+
 document.querySelectorAll('input[name="servico"]').forEach(el=>el.addEventListener('change',updateTimes));
 dateEl.addEventListener('change',updateTimes);
 dateEl.min=todayISO();
