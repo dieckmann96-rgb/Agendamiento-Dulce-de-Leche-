@@ -189,61 +189,26 @@ function validDate(v){
   const day=d.getDay();
   return day!==0;
 }
-function loadJSONP(params){
-  return new Promise((resolve,reject)=>{
-    const cb='dlCallback_'+Date.now()+'_'+Math.floor(Math.random()*10000);
-    const script=document.createElement('script');
-    const query=new URLSearchParams({...params,callback:cb}).toString();
-    const timer=setTimeout(()=>{cleanup();reject(new Error('Tiempo de espera agotado.'))},15000);
-    function cleanup(){clearTimeout(timer);delete window[cb];script.remove()}
-    window[cb]=(data)=>{cleanup();resolve(data)};
-    script.onerror=()=>{cleanup();reject(new Error('No se pudo conectar con la agenda.'))};
-    script.src=API_URL+'?'+query;
-    document.body.appendChild(script);
-  });
+async function apiGet(params){
+  const query=new URLSearchParams(params).toString();
+  const response=await fetch('/api/agenda?'+query,{method:'GET',headers:{'Accept':'application/json'}});
+  const text=await response.text();
+  let data;
+  try{data=JSON.parse(text)}catch(e){throw new Error('La agenda devolvió una respuesta no válida.')}
+  if(!response.ok)throw new Error(data.mensagem||'No se pudo conectar con la agenda.');
+  return data;
 }
-async function updateTimes(){
-  const mySeq=++requestSeq;
-  const serv=selectedService();
-  const date=dateEl.value;
-  timeEl.disabled=true;
-  timeEl.innerHTML='<option value="">Consultando horarios…</option>';
-  timeNote.className='time-note';
-  clearStatus();
-
-  if(!serv||!date){
-    timeEl.innerHTML='<option value="">Primero selecciona procedimiento y fecha</option>';
-    return;
-  }
-  if(!validDate(date)){
-    timeEl.innerHTML='<option value="">Domingo no disponible</option>';
-    setStatus('Los domingos el Studio permanece cerrado. Elige otro día.','error');
-    return;
-  }
-
-  try{
-    const data=await loadJSONP({acao:'disponibilidade',data:date,servico:serv});
-    if(mySeq!==requestSeq)return;
-    if(data.status!=='ok'){
-      throw new Error(data.mensagem||'No fue posible consultar la agenda.');
-    }
-    const horarios=Array.isArray(data.horarios)?data.horarios:[];
-    timeEl.innerHTML='';
-    if(!horarios.length){
-      timeEl.innerHTML='<option value="">No hay horarios disponibles</option>';
-      setStatus('No encontramos horarios disponibles para este procedimiento en esa fecha. Prueba otra fecha.','error');
-      return;
-    }
-    timeEl.appendChild(new Option('Selecciona un horario',''));
-    horarios.forEach(h=>timeEl.appendChild(new Option(h,h)));
-    timeEl.disabled=false;
-    timeNote.textContent='Horarios actualizados en tiempo real. El sistema volverá a comprobar la disponibilidad al confirmar.';
-    timeNote.className='time-note show';
-  }catch(err){
-    if(mySeq!==requestSeq)return;
-    timeEl.innerHTML='<option value="">No se pudo cargar la agenda</option>';
-    setStatus(err.message||'Error al consultar la agenda.','error');
-  }
+async function apiPost(data){
+  const response=await fetch('/api/agenda',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(data)
+  });
+  const text=await response.text();
+  let result;
+  try{result=JSON.parse(text)}catch(e){throw new Error('La agenda devolvió una respuesta no válida.')}
+  if(!response.ok)throw new Error(result.mensagem||'No se pudo conectar con la agenda.');
+  return result;
 }
 
 document.querySelectorAll('input[name="servico"]').forEach(el=>el.addEventListener('change',updateTimes));
@@ -271,7 +236,7 @@ form.addEventListener('submit',async e=>{
   setStatus('Comprobando nuevamente el horario y registrando tu reserva…');
 
   try{
-    const result=await loadJSONP({
+    const result=await apiPost({
       acao:'reservar',
       nome:nome,
       telefone:telefone,
