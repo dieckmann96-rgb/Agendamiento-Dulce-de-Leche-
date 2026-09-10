@@ -1,394 +1,114 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fbf5e6">
-<title>Dulce de Leche — Panel administrativo</title>
-<style>
-:root{--bg:#fbf5e6;--card:#fffaf0;--white:#fff;--brown:#4b2a1a;--brown2:#765b4c;--gold:#c57a2a;--line:#d9b98b;--soft:#f5ead8;--green:#2f8f5b;--red:#b34d3c;--shadow:0 12px 30px rgba(75,42,26,.09)}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#fffdf7,#fbf5e6 55%,#f7eddc);font-family:Arial,Helvetica,sans-serif;color:var(--brown)}a{text-decoration:none}.wrap{width:min(100% - 24px,1180px);margin:auto;padding:22px 0 45px}.hidden{display:none!important}.brand{display:flex;align-items:center;gap:12px}.brand img{width:58px;height:58px;border-radius:50%;border:2px solid var(--gold);object-fit:cover}h1,h2,h3{font-family:Georgia,serif}.brand h1{font-size:28px;margin:0}.brand small{color:var(--brown2)}header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}.card,.login{background:rgba(255,250,240,.97);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.login{max-width:460px;margin:70px auto;padding:30px}.login h2{font-size:25px;margin:25px 0 8px}.login p,.muted{color:var(--brown2);line-height:1.5}.label{display:block;font-weight:800;font-size:13px;margin:17px 0 7px}input,select{width:100%;height:46px;border:1px solid var(--line);border-radius:12px;background:var(--white);padding:0 13px;font-size:15px;color:var(--brown);outline:none}input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(197,122,42,.12)}button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown);color:#fff;font-weight:800;cursor:pointer;font-size:14px}.primary{background:linear-gradient(135deg,var(--gold),#a95f1d)}.wide{width:100%;margin-top:18px}.btn-light{background:#fff;color:var(--brown);border:1px solid var(--line)}.btn-wa{background:var(--green)}.btn-red{background:var(--red)}.topbar{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin-bottom:15px}.filters{display:flex;gap:9px;align-items:end;flex-wrap:wrap}.filter{min-width:170px}.filter label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.quick-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}.kpi-mini{padding:14px 16px}.kpi-mini span{display:block;color:var(--brown2);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.kpi-mini strong{display:block;font-size:22px;margin-top:5px}.kpi-mini small{display:block;color:var(--brown2);margin-top:3px}.periods{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 16px}.period-btn{background:#fff;color:var(--brown);border:1px solid var(--line);padding:8px 11px;font-size:12px}.period-btn.active{background:var(--brown);color:#fff}.champion{font-weight:800;color:var(--brown)}.finance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.profit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.expense-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:9px;align-items:end}.expense-form label{display:block;font-size:11px;font-weight:800;margin-bottom:5px}.expense-list{display:grid;gap:8px}.expense-row{display:grid;grid-template-columns:100px 1fr 140px 100px;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}.expense-row strong{white-space:nowrap}.positive{color:var(--green)}.negative{color:var(--red)}@media(max-width:900px){.profit-grid{grid-template-columns:1fr 1fr}.expense-form{grid-template-columns:1fr 1fr}.expense-row{grid-template-columns:1fr 1fr}}@media(max-width:600px){.profit-grid{grid-template-columns:1fr 1fr}.expense-form{grid-template-columns:1fr}.expense-row{grid-template-columns:1fr 1fr}}.finance-table{width:100%;border-collapse:collapse}.finance-table th,.finance-table td{text-align:left;padding:10px;border-bottom:1px solid #eadcc8;font-size:13px}.finance-table th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--brown2)}.metric{padding:18px}.metric span{display:block;color:var(--brown2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;font-size:30px;margin-top:7px}.metric small{color:var(--brown2);display:block;margin-top:4px}.layout{display:grid;grid-template-columns:1.4fr .8fr;gap:16px}.card{padding:19px;margin-bottom:16px}.card h2{font-size:23px;margin:0 0 7px}.section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.list{display:grid;gap:9px}.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}.item-top{display:flex;justify-content:space-between;gap:10px;align-items:start;font-weight:800}.pill{display:inline-block;background:var(--soft);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800;white-space:nowrap}.pill.ok{background:#e7f4ea;color:#267147}.pill.busy{background:#fae7e2;color:#9c3e30}.muted.small{font-size:12px;margin-top:5px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.actions .btn{font-size:12px;padding:9px 11px}.empty{padding:16px 0;color:var(--brown2)}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.slot{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.slot strong{display:block;font-size:15px}.slot small{display:block;margin-top:4px;color:var(--brown2);line-height:1.3}.slot.available{background:#f5fbf6;border-color:#b9d9c2}.slot.busy{background:#fff0ed;border-color:#e2b2a9}.slot.disabled{opacity:.65;background:#f6f3ed}.clients-search{display:flex;gap:8px;margin-bottom:10px}.clients-search input{flex:1}.client-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr auto;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid #eadcc8;font-size:13px}.client-row:last-child{border-bottom:0}.client-name{font-weight:800}.table-wrap{overflow:auto}.notice{padding:12px;border-radius:12px;background:var(--soft);color:var(--brown2);font-size:13px;line-height:1.45;margin-top:12px}.error{padding:12px;border-radius:12px;background:#fff0ed;color:#8d382d;font-size:13px;line-height:1.45;margin-top:12px}.loading{opacity:.6;pointer-events:none}.mini-title{font-weight:800;margin:0}.contacts-badge{background:var(--red);color:#fff;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800}.footer{text-align:center;color:var(--brown2);font-size:12px;margin-top:22px}@media(max-width:900px){.summary{grid-template-columns:1fr 1fr}.finance-grid{grid-template-columns:1fr 1fr}.layout{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.quick-kpis{grid-template-columns:1fr 1fr}.periods{display:grid;grid-template-columns:repeat(3,1fr)}.period-btn{width:100%}.wrap{width:min(100% - 16px,1180px);padding-top:12px}.brand h1{font-size:23px}.brand img{width:50px;height:50px}.summary{grid-template-columns:1fr 1fr}.finance-grid{grid-template-columns:1fr}.metric{padding:14px}.metric strong{font-size:24px}.timeline{grid-template-columns:repeat(2,1fr)}.client-row{grid-template-columns:1fr 1fr}.client-row .client-action{grid-column:1/-1}.filters,.filter{width:100%}.filters input,.filters select{width:100%}header{align-items:flex-start}}
-
-.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.compare-card{padding:18px}.compare-card span{display:block;color:var(--brown2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.compare-card strong{display:block;font-size:25px;margin-top:7px}.delta.up{color:var(--green)}.delta.down{color:var(--red)}.delta.neutral{color:var(--brown2)}.chart{padding:18px}.chart-title{font-family:Georgia,serif;font-size:23px;font-weight:700;margin:0 0 5px}.chart-sub{color:var(--brown2);font-size:12px;margin-bottom:15px}.bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(28px,1fr));gap:7px;align-items:end;height:210px;padding:12px 4px 0;border-bottom:1px solid var(--line)}.bar-col{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}.bar{width:100%;max-width:34px;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,var(--gold),var(--brown));min-height:3px}.bar-label{font-size:9px;color:var(--brown2)}.bar-value{font-size:9px;font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg);max-height:50px;overflow:hidden}.chart-legend{display:flex;justify-content:space-between;color:var(--brown2);font-size:11px;margin-top:8px}.trend-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.compare-note{font-size:12px;color:var(--brown2);margin-top:4px}@media(max-width:900px){.compare-grid{grid-template-columns:1fr 1fr}.trend-grid{grid-template-columns:1fr}}@media(max-width:600px){.compare-grid{grid-template-columns:1fr 1fr}.compare-card{padding:14px}.compare-card strong{font-size:20px}.bars{height:180px;gap:4px}.bar{max-width:24px}.bar-value{display:none}}
-.expense-actions{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}.btn-danger{background:#fff0ed!important;color:#9c3e30!important;border:1px solid #e2b2a9!important;box-shadow:none!important}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <section id="login" class="login">
-    <div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Beauty Studio · Administración</small></div></div>
-    <h2>Panel administrativo</h2>
-    <p>Accede al panel para controlar agenda, clientes y contactos sin entrar directamente al Google Sheets.</p>
-    <label class="label" for="token">Código de acceso</label>
-    <input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
-    <button id="loginBtn" class="btn primary wide">Entrar al panel</button>
-    <div id="loginMsg"></div>
-  </section>
-
-  <main id="app" class="hidden">
-    <header>
-      <div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div>
-      <button id="logoutBtn" class="btn btn-light">Cerrar sesión</button>
-    </header>
-
-    <div class="topbar">
-      <div><h2 style="margin:0;font-size:27px">Panel del Studio</h2><div id="todayLabel" class="muted small"></div></div>
-      <div class="filters">
-        <div class="filter"><label for="date">Agenda del día</label><input id="date" type="date"></div>
-        <div class="filter"><label for="service">Disponibilidad para</label><select id="service"></select></div>
-        <button id="refresh" class="btn primary">Actualizar</button>
-      </div>
-    </div>
-
-    <div class="periods" aria-label="Período de resumen">
-      <button class="period-btn active" data-period="today">Hoy</button>
-      <button class="period-btn" data-period="week">7 días</button>
-      <button class="period-btn" data-period="month">Este mes</button>
-    </div>
-
-    <section class="summary">
-      <div class="card metric"><span>Atendimientos hoy</span><strong id="mToday">—</strong><small>Reservas del día</small></div>
-      <div class="card metric"><span>Atendimientos semana</span><strong id="mWeek">—</strong><small>Desde lunes</small></div>
-      <div class="card metric"><span>Atendimientos mes</span><strong id="mMonth">—</strong><small>Mes actual</small></div>
-      <div class="card metric"><span>Contactos de hoy</span><strong id="mPost">—</strong><small>Pós-venda pendiente</small></div>
-    </section>
-
-    <section class="finance-grid">
-      <div class="card metric"><span>Facturación hoy</span><strong id="fToday">Gs 0</strong><small>Valores registrados</small></div>
-      <div class="card metric"><span>Facturación semana</span><strong id="fWeek">Gs 0</strong><small>Desde lunes</small></div>
-      <div class="card metric"><span>Facturación mes</span><strong id="fMonth">Gs 0</strong><small>Mes actual</small></div>
-    </section>
-
-    <section class="profit-grid">
-      <div class="card metric"><span>Despesas do mês</span><strong id="expenseMonth">Gs 0</strong><small>Despesas registradas + fixas</small></div>
-      <div class="card metric"><span>Lucro líquido</span><strong id="profitMonth">Gs 0</strong><small>Faturación − despesas</small></div>
-      <div class="card metric"><span>Margem líquida</span><strong id="marginMonth">0%</strong><small>Lucro ÷ faturación</small></div>
-    </section>
-
-    <div class="card">
-      <div class="section-head"><div><h2>💸 Registrar despesa</h2><div class="muted small">As despesas fixas do mês são geradas automaticamente. Materiais e outras compras entram somente quando realmente forem comprados.</div></div></div>
-      <div class="expense-form">
-        <div><label for="expenseDate">Data</label><input id="expenseDate" type="date"></div>
-        <div><label for="expenseCategory">Categoria</label><select id="expenseCategory"><option>Materiais para micropigmentación</option><option>Materiais para cílios</option><option>Produtos para unhas</option><option>Produtos para sobrancelhas</option><option>Produtos de depilación</option><option>Publicidad</option><option>Equipamentos</option><option>Manutenção</option><option>Outros</option></select></div>
-        <div><label for="expenseDescription">Descrição</label><input id="expenseDescription" placeholder="Ex.: compra de pigmentos"></div>
-        <div><label for="expenseValue">Valor (Gs)</label><input id="expenseValue" inputmode="numeric" placeholder="0"></div>
-        <button id="addExpense" class="btn primary">+ Registrar</button>
-      </div>
-      <div id="expenseMsg"></div>
-    </div>
-
-    <div class="card">
-      <div class="section-head"><div><h2>🧾 Despesas do mês</h2><div class="muted small">Registro das despesas reais do mês consultado</div></div></div>
-      <div id="expenseList" class="expense-list"></div>
-    </div>
-
-    <section class="quick-kpis">
-      <div class="card kpi-mini"><span>Ticket medio del mes</span><strong id="ticketMonth">Gs 0</strong><small>Facturación ÷ atendimientos</small></div>
-      <div class="card kpi-mini"><span>Servicio campeón</span><strong id="championService" class="champion">—</strong><small id="championDetail">Mayor facturación del mes</small></div>
-    </section>
-
-    <section class="compare-grid">
-      <div class="card compare-card"><span>Comparación facturación</span><strong id="compareRevenue">—</strong><div id="compareRevenueNote" class="compare-note">vs. mes anterior</div></div>
-      <div class="card compare-card"><span>Comparación atendimientos</span><strong id="compareCount">—</strong><div id="compareCountNote" class="compare-note">vs. mes anterior</div></div>
-      <div class="card compare-card"><span>Mejor día de la semana</span><strong id="bestWeekday">—</strong><div id="bestWeekdayNote" class="compare-note">Facturación del mes</div></div>
-    </section>
-
-    <div class="trend-grid">
-      <div class="card chart"><h2 class="chart-title">📈 Facturación diaria</h2><div class="chart-sub">Evolución del mes actual</div><div id="revenueChart"></div></div>
-      <div class="card chart"><h2 class="chart-title">👥 Atendimientos diarios</h2><div class="chart-sub">Cantidad de reservas por día</div><div id="countChart"></div></div>
-    </div>
-
-    <div class="card">
-      <div class="section-head"><div><h2>💰 Rendimiento por servicio</h2><div class="muted small">Facturación del mes y cantidad de atendimientos. Los valores variables sin informar quedan pendientes.</div></div></div>
-      <div id="financeTable" class="table-wrap"></div>
-    </div>
-
-    <div class="layout">
-      <section>
-        <div class="card">
-          <div class="section-head"><div><h2>📅 Agendamientos</h2><div class="muted small">Reservas del día seleccionado</div></div><span id="dayCount" class="pill">—</span></div>
-          <div id="agendaToday" class="list"></div>
-        </div>
-
-        <div class="card">
-          <div class="section-head"><div><h2>⏰ Horarios</h2><div class="muted small">Ocupados y disponibles para el procedimiento seleccionado</div></div></div>
-          <div id="slots" class="timeline"></div>
-        </div>
-
-        <div class="card">
-          <div class="section-head"><div><h2>📆 Próximos agendamientos</h2><div class="muted small">Próximos 7 días</div></div></div>
-          <div id="next7" class="list"></div>
-        </div>
-
-        <div class="card">
-          <div class="section-head"><div><h2>👤 Clientes</h2><div class="muted small">Consulta rápida de la base de clientes</div></div></div>
-          <div class="clients-search"><input id="clientSearch" placeholder="Buscar por nombre, teléfono o documento"><button id="clearSearch" class="btn btn-light">Limpiar</button></div>
-          <div id="clients" class="table-wrap"></div>
-        </div>
-      </section>
-
-      <aside>
-        <div class="card">
-          <div class="section-head"><div><h2>💬 Contactos de hoy</h2><div class="muted small">Clientes que ya necesitan pós-venda</div></div><span id="contactsBadge" class="contacts-badge">0</span></div>
-          <div id="post" class="list"></div>
-        </div>
-
-        <div class="card">
-          <div class="section-head"><div><h2>🕐 Próxima cita</h2></div></div>
-          <div id="nextCard"></div>
-        </div>
-
-        <div class="card">
-          <h2>ℹ️ Estado</h2>
-          <div class="notice">La información se consulta directamente desde la agenda del Studio. Los cambios realizados por una reserva aparecen aquí al actualizar.</div>
-        </div>
-      </aside>
-    </div>
-    <div class="footer">Dulce de Leche Beauty Studio · Panel administrativo</div>
-  </main>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dulce de Leche · Agenda</title><link rel="icon" href="logo.jpg"><style>
+:root{
+ --bg:#fbf4e5;--card:#fffaf1;--white:#fff;--brown:#4f2b1c;--brown2:#7c5d4d;
+ --gold:#c77a24;--line:#dfc39a;--green:#2c9860;--red:#b94c3d;--soft:#f7ead7;
+ --shadow:0 12px 30px rgba(79,43,28,.09)
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fffdf8 0%,#fbf4e5 55%,#f7eddc 100%);font-family:Arial,Helvetica,sans-serif;color:var(--brown)}
+a{text-decoration:none;color:inherit}.hidden{display:none!important}
+.wrap{width:min(100% - 24px,1180px);margin:auto;padding:18px 0 42px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);object-fit:cover}
+.brand h1{font:700 28px Georgia,serif;margin:0}.brand small{color:var(--brown2)}
+h1,h2,h3{font-family:Georgia,serif}
+.card,.login{background:rgba(255,250,241,.97);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.card{padding:20px;margin-bottom:16px}.login{max-width:470px;margin:70px auto;padding:30px}
+.login h2{font-size:26px;margin:22px 0 8px}.login p,.muted{color:var(--brown2);line-height:1.5}
+.label{display:block;font-weight:800;font-size:13px;margin:16px 0 7px}
+input,select{width:100%;height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 13px;font-size:15px;color:var(--brown);outline:0}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(199,122,36,.12)}
+button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown);color:#fff;font-weight:800;cursor:pointer;font-size:14px}
+.primary{background:linear-gradient(135deg,#d18a32,#ad631d)}.btn-light{background:#fff;color:var(--brown);border:1px solid var(--line)}
+.btn-wa{background:var(--green)}.btn-red{background:var(--red)}.wide{width:100%;margin-top:18px}
+.module-nav{display:flex;gap:8px;overflow:auto;padding:4px 2px 10px;margin-bottom:14px;scrollbar-width:none}
+.module-nav::-webkit-scrollbar{display:none}.nav-link{white-space:nowrap;padding:10px 14px;border:1px solid var(--line);background:#fff8ed;border-radius:999px;font-weight:800;font-size:13px}.nav-link.active{background:var(--brown);color:#fff}
+.page-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:14px}.page-head h2{font-size:30px;margin:0 0 5px}.page-head p{margin:0}
+.filters{display:flex;gap:9px;align-items:end;flex-wrap:wrap}.filter{min-width:170px}.filter label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.kpi{padding:18px}.kpi span{display:block;color:var(--brown2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.kpi strong{display:block;font-size:31px;margin-top:7px}.kpi small{display:block;color:var(--brown2);margin-top:4px}.kpi.alert{border-color:#e3b2a8}.kpi.alert strong{color:var(--red)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.section-head h3{margin:0;font-size:24px}.section-head p{margin:4px 0 0}
+.list{display:grid;gap:10px}.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.item-top{display:flex;justify-content:space-between;gap:10px;align-items:start;font-weight:800;font-size:16px}
+.pill{display:inline-block;background:var(--soft);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800;white-space:nowrap}.pill.ok{background:#e7f4ea;color:#267147}.pill.busy{background:#fae7e2;color:#9c3e30}
+.small{font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.actions .btn{font-size:12px;padding:9px 11px}.empty{padding:18px 4px;color:var(--brown2)}
+.agenda-grid{display:grid;grid-template-columns:1.55fr .85fr;gap:16px}.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.slot{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.slot strong{display:block;font-size:15px}.slot small{display:block;margin-top:4px;color:var(--brown2);line-height:1.3}.slot.available{background:#f5fbf6;border-color:#b9d9c2}.slot.busy{background:#fff0ed;border-color:#e2b2a9}.slot.disabled{opacity:.65;background:#f6f3ed}
+.next-highlight{background:linear-gradient(135deg,#fff8eb,#f9eedb);border:1px solid var(--line);border-radius:16px;padding:16px}.next-highlight .time{font-size:34px;font-weight:900}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px 10px;border-bottom:1px solid #eadcc8;font-size:13px}.table th{font-size:11px;text-transform:uppercase;color:var(--brown2);letter-spacing:.07em}
+.expense-form{display:grid;grid-template-columns:1fr 1fr 1.5fr 1fr auto;gap:9px;align-items:end}.expense-form label{display:block;font-size:11px;font-weight:800;margin-bottom:5px}
+.expense-row{display:grid;grid-template-columns:100px 1fr 140px 1fr;gap:10px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.expense-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.expense-actions button{font-size:11px;padding:8px 10px}
+.progress{height:12px;background:#efe1cb;border-radius:999px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,#d28b35,#a85d1a);border-radius:inherit}
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.compare-card{padding:18px}.compare-card span{display:block;color:var(--brown2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.compare-card strong{display:block;font-size:26px;margin-top:7px}.positive{color:var(--green)}.negative{color:var(--red)}
+.chart-card{padding:18px}.chart-card h3{margin:0;font-size:23px}.chart-sub{color:var(--brown2);font-size:12px;margin:4px 0 14px}
+.bar-chart{display:flex;align-items:flex-end;gap:7px;height:280px;padding:10px 0 0;border-bottom:1px solid var(--line);overflow-x:auto}.bar-group{min-width:28px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}.bar{width:100%;max-width:30px;background:linear-gradient(180deg,#d5943f,#704025);border-radius:7px 7px 2px 2px;min-height:2px}.bar-label{font-size:9px;color:var(--brown2)}.bar-value{font-size:9px;font-weight:800;white-space:nowrap;transform:rotate(-65deg);transform-origin:center bottom;margin-bottom:3px}
+.chart-meta{display:flex;justify-content:space-between;margin-top:8px;color:var(--brown2);font-size:11px}
+.search-row{display:flex;gap:8px;margin-bottom:12px}.search-row input{flex:1}.client-row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #eadcc8}.client-name{font-weight:800}
+.footer{text-align:center;color:var(--brown2);font-size:12px;margin-top:22px}
+@media(max-width:900px){.agenda-grid{grid-template-columns:1fr}.kpi-grid,.compare-grid{grid-template-columns:1fr 1fr}.expense-form{grid-template-columns:1fr 1fr}.expense-row{grid-template-columns:1fr 1fr}.client-row{grid-template-columns:1.4fr 1fr 1fr}.client-row .client-action{grid-column:1/-1}}
+@media(max-width:600px){.wrap{width:min(100% - 16px,1180px);padding-top:12px}.brand h1{font-size:23px}.brand img{width:50px;height:50px}.page-head h2{font-size:27px}.kpi-grid,.compare-grid{grid-template-columns:1fr}.kpi strong{font-size:27px}.filters,.filter{width:100%}.filters input,.filters select{width:100%}.timeline{grid-template-columns:repeat(2,1fr)}.expense-form{grid-template-columns:1fr}.expense-row{grid-template-columns:1fr}.module-nav{margin-right:-4px}.bar-chart{height:240px}}
+</style></head><body><div class="wrap"><section id="login" class="login">
+<div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Beauty Studio · Administración</small></div></div>
+<h2>Panel administrativo</h2><p>Accede a los módulos del Studio desde un solo lugar.</p>
+<label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
+<button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
+</section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
+<a class="nav-link" data-module="agenda" href="admin.html">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="finance.html">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="reports.html">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="clients.html">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="postventa.html">💬 Pós-venta</a>
+</nav>
+<div class="page-head"><div><h2>Agenda del Studio</h2><p id="todayLabel" class="muted small"></p></div><div class="filters"><div class="filter"><label>Agenda del día</label><input id="date" type="date"></div><div class="filter"><label>Disponibilidad para</label><select id="service"></select></div><button id="refresh" class="btn primary">Actualizar</button></div></div>
+<section class="kpi-grid">
+<div class="card kpi"><span>Atendimientos hoy</span><strong id="mToday">—</strong><small>Reservas del día</small></div>
+<div class="card kpi"><span>Atendimientos semana</span><strong id="mWeek">—</strong><small>Desde lunes</small></div>
+<div class="card kpi"><span>Atendimientos mes</span><strong id="mMonth">—</strong><small>Mes actual</small></div>
+</section>
+<div class="agenda-grid"><div>
+<section class="card"><div class="section-head"><div><h3>📅 Agendamientos</h3><p id="dayCount" class="muted small">—</p></div></div><div id="agendaToday" class="list"></div></section>
+<section class="card"><div class="section-head"><div><h3>⏰ Horarios</h3><p class="muted small">Ocupados y disponibles para el procedimiento seleccionado.</p></div></div><div id="slots" class="timeline"></div></section>
+<section class="card"><div class="section-head"><div><h3>📆 Próximos agendamientos</h3><p class="muted small">Próximos 7 días.</p></div></div><div id="next7" class="list"></div></section>
 </div>
-
-<script>
+<aside>
+<section class="card"><div class="section-head"><div><h3>🕐 Próxima cita</h3><p class="muted small">Siguiente atención del día.</p></div></div><div id="nextCard"></div></section>
+<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">Pendientes de hoy.</p></div></div><div id="postSummary"></div><a class="btn primary" href="postventa.html">Abrir pós-venda</a></section>
+<section class="card"><div class="section-head"><div><h3>👤 Clientes</h3><p class="muted small">Base del Studio.</p></div></div><div id="clientsMini"></div><a class="btn btn-light" href="clients.html">Ver clientes</a></section>
+</aside></div>
+<footer class="footer">Dulce de Leche Beauty Studio</footer></main></div><script>
 const API='/api/agenda';
-const login=document.getElementById('login');
-const app=document.getElementById('app');
-const tokenEl=document.getElementById('token');
-const dateEl=document.getElementById('date');
-const serviceEl=document.getElementById('service');
-const clientSearch=document.getElementById('clientSearch');
+const SERVICES=['Micro pigmentación de Labios','Micro pigmentación de Cejas','Neutralización de Labios','Extensión de Pestañas','Depilación','Laminado de Cejas','Lifting de Pestañas','Diseño de Cejas','Diseño de Cejas con Henna','Diseño de Cejas con Tinte','Servicio de Manicura','Servicio de Pedicure'];
 let lastData=null;
-let selectedPeriod="today";
-
-const SERVICES=[
-'Micro pigmentación de Labios','Micro pigmentación de Cejas','Neutralización de Labios','Extensión de Pestañas','Depilación','Laminado de Cejas','Lifting de Pestañas','Diseño de Cejas','Diseño de Cejas con Henna','Diseño de Cejas con Tinte','Servicio de Manicura','Servicio de Pedicure'
-];
-
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));}
-function todayISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
-function wa(url,label='WhatsApp'){return url?`<a class="btn btn-wa" href="${esc(url)}" target="_blank" rel="noopener">📱 ${label}</a>`:''}
-function cal(url){return url?`<a class="btn btn-light" href="${esc(url)}" target="_blank" rel="noopener">🗓️ Calendar</a>`:''}
+function todayISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}
 function formatGs(v){return 'Gs '+Math.round(Number(v||0)).toLocaleString('es-PY');}
-function appointment(a,withDate=false){const value=Number(a.valor||0);return `<div class="item"><div class="item-top"><span>${withDate?esc(a.data)+' · ':''}${esc(a.hora)} · ${esc(a.cliente)}</span><span class="pill ${String(a.status).toLowerCase()==='confirmado'?'ok':''}">${esc(a.status||'Confirmado')}</span></div><div class="muted small">${esc(a.servico)} · ${esc(a.duracao)} min · termina ${esc(a.fim)}</div><div class="muted small">${esc(a.telefone)}${a.tipoDocumento?' · '+esc(a.tipoDocumento)+': '+esc(a.documento):''}</div><div class="muted small"><b>Valor:</b> ${value?formatGs(value):'Pendiente de informar'}</div><div class="actions">${wa(a.whatsappUrl)}${cal(a.calendarUrl)}<button class="btn btn-light" onclick="editarValor('${esc(a.id)}',${value||0})">💰 ${value?'Editar valor':'Informar valor'}</button></div></div>`}
-function nextCard(a){return a?appointment(a):'<div class="empty">No hay más citas.</div>'}
-
-async function apiPost(data){
- const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});
- const text=await r.text();
- let json; try{json=JSON.parse(text)}catch(e){throw new Error('La API devolvió una respuesta no válida.')}
- if(!r.ok)throw new Error(json.mensagem||'Error de conexión');
- return json;
+function wa(url,label='WhatsApp'){return url?`<a class="btn btn-wa" href="${esc(url)}" target="_blank" rel="noopener">📱 ${label}</a>`:'';}
+function cal(url){return url?`<a class="btn btn-light" href="${esc(url)}" target="_blank" rel="noopener">🗓️ Calendar</a>`:'';}
+async function apiPost(data){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});const t=await r.text();let j;try{j=JSON.parse(t)}catch(e){throw new Error('La API devolvió una respuesta no válida.')};if(!r.ok)throw new Error(j.mensagem||'Error de conexión');return j;}
+function setupNav(active){document.querySelectorAll('.nav-link').forEach(a=>a.classList.toggle('active',a.dataset.module===active));}
+function logout(){localStorage.removeItem('dl_admin_token');location.href='admin.html';}
+function authPage(){const token=localStorage.getItem('dl_admin_token');if(!token){document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
+function goHome(){location.href='admin.html';}
+function appointment(a,withDate=false){
+ const value=Number(a.valor||0);
+ return `<div class="item"><div class="item-top"><span>${withDate?esc(a.data)+' · ':''}${esc(a.hora)} · ${esc(a.cliente)}</span><span class="pill ${String(a.status).toLowerCase()==='confirmado'?'ok':''}">${esc(a.status||'Confirmado')}</span></div><div class="muted small">${esc(a.servico)} · ${esc(a.duracao)} min · termina ${esc(a.fim)}</div><div class="muted small">${esc(a.telefone)}${a.tipoDocumento?' · '+esc(a.tipoDocumento)+': '+esc(a.documento):''}</div><div class="muted small"><b>Valor:</b> ${value?formatGs(value):'Pendiente de informar'}</div><div class="actions">${wa(a.whatsappUrl)}${cal(a.calendarUrl)}<button class="btn btn-light" onclick="editarValor('${esc(a.id)}',${value||0})">💰 ${value?'Editar valor':'Informar valor'}</button></div></div>`;
 }
-
-function showLoginMessage(text,error=false){document.getElementById('loginMsg').innerHTML=text?`<div class="${error?'error':'notice'}">${esc(text)}</div>`:''}
-
-async function load(){
- const token=localStorage.getItem('dl_admin_token');
- if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}
- app.classList.add('loading');
- try{
-   const data=await apiPost({acao:'admin',token,data:dateEl.value||todayISO(),servico:serviceEl.value});
-   if(data.status!=='ok')throw new Error(data.mensagem||'No autorizado');
-   lastData=data;
-   render(data);
-   login.classList.add('hidden');app.classList.remove('hidden');
- }catch(e){localStorage.removeItem('dl_admin_token');login.classList.remove('hidden');app.classList.add('hidden');showLoginMessage(e.message,true)}
- finally{app.classList.remove('loading')}
+async function editarValor(id,atual){
+ const token=localStorage.getItem('dl_admin_token');if(!token)return;
+ const appt=(lastData?.agendaHoje||[]).concat(lastData?.proximos7Dias||[]).find(a=>String(a.id)===String(id));const serv=appt?.servico||'';let msg='Informe el valor cobrado en Gs:';
+ if(serv==='Depilación')msg=`Depilación:\n\nAxilas: 30.000\nBozo: 30.000\nMedia Piernas: 85.000\nPierna completa: 150.000`;
+ else if(serv==='Extensión de Pestañas')msg='Extensión de Pestañas — valor cobrado (desde Gs 200.000):';
+ else if(serv==='Servicio de Manicura')msg=`Manicura:\n\nTradicional: 70.000\nSemipermanente: 90.000`;
+ else if(serv==='Servicio de Pedicure')msg=`Pedicure:\n\nTradicional: 80.000\nSemipermanente: 100.000`;
+ const input=prompt(msg,atual?String(Math.round(atual)):'');if(input===null)return;const valor=Number(String(input).replace(/[^0-9]/g,''));if(!isFinite(valor)||valor<0)return alert('Valor inválido.');
+ const r=await apiPost({acao:'admin_valor',id,valor,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();
 }
+async function marcarContactado(id){const token=localStorage.getItem('dl_admin_token');if(!token||!confirm('¿Marcar este contacto como realizado?'))return;const r=await apiPost({acao:'posvenda_marcar',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();}
+function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=document.getElementById('token').value.trim();if(!t){document.getElementById('loginMsg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}localStorage.setItem('dl_admin_token',t);loadData();};}
 
-function pctChange(current, previous){
- const c=Number(current||0), p=Number(previous||0);
- if(p===0) return c===0?0:null;
- return ((c-p)/p)*100;
-}
-function deltaHtml(current, previous, suffix='') {
- const d=pctChange(current,previous);
- if(d===null) return {text:'Nuevo', cls:'neutral'};
- if(d===0) return {text:'0%', cls:'neutral'};
- return {text:(d>0?'+':'')+d.toFixed(1)+'%'+suffix, cls:d>0?'up':'down'};
-}
-function renderComparison(data){
- const r=data.resumo||{};
- const dr=deltaHtml(r.faturamentoMes,r.faturamentoMesAnterior);
- const dc=deltaHtml(r.atendimentosMes,r.atendimentosMesAnterior);
- const rev=document.getElementById('compareRevenue'); rev.textContent=dr.text; rev.className='delta '+dr.cls;
- document.getElementById('compareRevenueNote').textContent=`${formatGs(r.faturamentoMes)} vs ${formatGs(r.faturamentoMesAnterior||0)} mes anterior`;
- const cnt=document.getElementById('compareCount'); cnt.textContent=dc.text; cnt.className='delta '+dc.cls;
- document.getElementById('compareCountNote').textContent=`${r.atendimentosMes||0} vs ${r.atendimentosMesAnterior||0} atendimientos`;
- const best=r.mejorDiaSemana;
- document.getElementById('bestWeekday').textContent=best?best.dia:'—';
- document.getElementById('bestWeekdayNote').textContent=best?`${formatGs(best.facturacion)} · ${best.atendimientos} atend.`:'Sin datos del mes';
-}
-function renderBars(targetId, items, valueKey, money=false){
- const el=document.getElementById(targetId);
- if(!items||!items.length){el.innerHTML='<div class="empty">Sin datos.</div>';return}
- const max=Math.max(...items.map(x=>Number(x[valueKey]||0)),1);
- el.innerHTML='<div class="bars">'+items.map(x=>{
-   const v=Number(x[valueKey]||0);
-   const h=Math.max(2,(v/max)*170);
-   const label=String(x.dia);
-   const val=money?formatGs(v):String(v);
-   return `<div class="bar-col" title="${esc(label)}: ${esc(val)}"><span class="bar-value">${esc(val)}</span><div class="bar" style="height:${h}px"></div><span class="bar-label">${esc(label)}</span></div>`;
- }).join('')+'</div><div class="chart-legend"><span>Inicio del mes</span><span>Fin del mes</span></div>';
-}
-
-function render(data){
- document.getElementById('todayLabel').textContent=`Fecha consultada: ${data.hoje}`;
- document.getElementById('mToday').textContent=data.resumo.atendimentosHoje;
- document.getElementById('mWeek').textContent=data.resumo.atendimentosSemana;
- document.getElementById('mMonth').textContent=data.resumo.atendimentosMes;
- document.getElementById('mPost').textContent=data.resumo.posVendaPendente;
- document.getElementById('dayCount').textContent=`${data.agendaHoje.length} reserva${data.agendaHoje.length===1?'':'s'}`;
- document.getElementById('contactsBadge').textContent=data.posVenda.length;
- document.getElementById('agendaToday').innerHTML=data.agendaHoje.length?data.agendaHoje.map(a=>appointment(a)).join(''):'<div class="empty">No hay agendamientos para este día.</div>';
- document.getElementById('next7').innerHTML=data.proximos7Dias.length?data.proximos7Dias.map(a=>appointment(a,true)).join(''):'<div class="empty">No hay próximos agendamientos.</div>';
- document.getElementById('nextCard').innerHTML=nextCard(data.resumo.proxima);
- document.getElementById('post').innerHTML=data.posVenda.length?data.posVenda.map(p=>`<div class="item"><div class="item-top"><span>${esc(p.cliente)}</span><span class="pill busy">Pendiente</span></div><div class="muted small">${esc(p.servico)} · contacto: ${esc(p.proximoContato)}</div><div class="muted small">${esc(p.telefone)}</div><div class="muted small">${esc(p.mensagem)}</div><div class="actions">${wa(p.whatsappUrlComMensagem,'Enviar WhatsApp')}<button class="btn btn-light" onclick="marcarContactado('${esc(p.id)}')">✓ Marcar contactado</button></div></div>`).join(''):'<div class="empty">Todo al día 🎉</div>';
- document.getElementById('fToday').textContent=formatGs(data.resumo.faturamentoHoje);
- document.getElementById('fWeek').textContent=formatGs(data.resumo.faturamentoSemana);
- document.getElementById('fMonth').textContent=formatGs(data.resumo.faturamentoMes);
- document.getElementById('expenseMonth').textContent=formatGs(data.resumo.despesasMes);
- document.getElementById('profitMonth').textContent=formatGs(data.resumo.lucroMes);
- document.getElementById('profitMonth').className=data.resumo.lucroMes>=0?'positive':'negative';
- document.getElementById('marginMonth').textContent=(Number(data.resumo.margemMes||0)).toFixed(1)+'%';
- renderExpenses(data.despesasMes||[]);
- const monthCount=Number(data.resumo.atendimientosMes||data.resumo.atendimentosMes||0);
- const monthRevenue=Number(data.resumo.faturamentoMes||0);
- document.getElementById('ticketMonth').textContent=formatGs(monthCount?monthRevenue/monthCount:0);
- const rows=data.resumo.faturamentoMesPorServico||[];
- const champion=rows.find(r=>Number(r.faturamento||0)>0)||rows[0];
- document.getElementById('championService').textContent=champion?champion.servico:'—';
- document.getElementById('championDetail').textContent=champion?`${formatGs(champion.faturamento||0)} · ${champion.atendimentos||0} atend.`:'Sin datos del mes';
- renderFinance(rows);
- renderComparison(data);
- renderBars('revenueChart',data.resumo.tendenciaMes||[],'facturacion',true);
- renderBars('countChart',data.resumo.tendenciaMes||[],'atendimientos',false);
- renderSlots(data.slots);
- renderClients(data.clientes);
-}
-
-function renderExpenses(rows){
- const el=document.getElementById('expenseList');
- if(!rows.length){el.innerHTML='<div class="empty">Ainda não há despesas registradas neste mês.</div>';return}
- el.innerHTML=rows.map(d=>{
-   const editable=d.tipo==='Despesa variável';
-   return `<div class="expense-row"><div>${esc(d.data)}</div><div><b>${esc(d.categoria)}</b><div class="muted small">${esc(d.descricao)}${d.observacao?' · '+esc(d.observacao):''}</div></div><strong>${formatGs(d.valor)}</strong><div class="muted small">${esc(d.tipo)}</div><div class="expense-actions">${editable?`<button class="btn btn-light" onclick="editarDespesa('${esc(d.id)}',${Number(d.valor)||0},'${esc(d.data)}','${esc(d.categoria)}','${esc(d.descricao)}')">✏️ Editar</button><button class="btn btn-danger" onclick="excluirDespesa('${esc(d.id)}')">🗑️ Excluir</button>`:'<span class="muted small">Fixa automática</span>'}</div></div>`;
- }).join('');
-}
-
-async function editarDespesa(id, valorAtual, dataAtual, categoriaAtual, descricaoAtual){
- const token=localStorage.getItem('dl_admin_token');
- if(!token)return;
- const valorTxt=prompt('Valor da despesa em Gs:',String(Math.round(valorAtual||0)));
- if(valorTxt===null)return;
- const valor=Number(String(valorTxt).replace(/[^0-9]/g,''));
- if(!isFinite(valor)||valor<=0){alert('Valor inválido.');return}
- const descricao=prompt('Descrição:',descricaoAtual||categoriaAtual||'');
- if(descricao===null)return;
- try{
-   const data=await apiPost({acao:'editar_despesa',id,token,valor,categoria:categoriaAtual,descricao});
-   if(data.status!=='ok')throw new Error(data.mensagem||'No se pudo actualizar la despesa');
-   await load();
- }catch(e){alert(e.message)}
-}
-
-async function excluirDespesa(id){
- const token=localStorage.getItem('dl_admin_token');
- if(!token||!confirm('¿Excluir esta despesa? Esta acción no se puede deshacer.'))return;
- try{
-   const data=await apiPost({acao:'excluir_despesa',id,token});
-   if(data.status!=='ok')throw new Error(data.mensagem||'No se pudo excluir la despesa');
-   await load();
- }catch(e){alert(e.message)}
-}
-
-function renderFinance(rows){
- const el=document.getElementById('financeTable');
- if(!rows.length){el.innerHTML='<div class="empty">Ainda não há atendimentos no mês consultado.</div>';return}
- el.innerHTML=`<table class="finance-table"><thead><tr><th>Servicio</th><th>Atenciones</th><th>Facturación</th><th>Pendientes</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.servico)}</td><td>${r.atendimentos}</td><td>${r.faturamento?formatGs(r.faturamento):'Gs 0'}</td><td>${r.pendenteValor||0}</td></tr>`).join('')}</tbody></table>`;
-}
-
-async function editarValor(id, atual){
- const token=localStorage.getItem('dl_admin_token');
- if(!token)return;
- const appt=(lastData?.agendaHoje||[]).concat(lastData?.proximos7Dias||[]).find(a=>String(a.id)===String(id));
- const serv=appt?.servico||'';
- let msg='Informe o valor cobrado em Gs:';
- if(serv==='Depilación'){
-   msg=`Depilación — informe o valor cobrado em Gs:
-
-Axilas: 30.000
-Bozo: 30.000
-Media Piernas: 85.000
-Pierna completa: 150.000`;
- } else if(serv==='Extensión de Pestañas'){
-   msg='Extensión de Pestañas — valor cobrado (desde Gs 200.000):';
- } else if(serv==='Servicio de Manicura'){
-   msg=`Manicura — informe o valor cobrado em Gs:
-
-Tradicional: 70.000
-Semipermanente: 90.000`;
- } else if(serv==='Servicio de Pedicure'){
-   msg=`Pedicure — informe o valor cobrado em Gs:
-
-Tradicional: 80.000
-Semipermanente: 100.000`;
- }
- const entrada=prompt(msg, atual?String(Math.round(atual)):'');
- if(entrada===null)return;
- const valor=Number(String(entrada).replace(/[^0-9]/g,''));
- if(!isFinite(valor)||valor<0){alert('Valor inválido.');return}
- try{const data=await apiPost({acao:'admin_valor',id,valor,token});if(data.status!=='ok')throw new Error(data.mensagem||'No se pudo actualizar');await load()}catch(e){alert(e.message)}
-}
-
-function renderSlots(slots){
- document.getElementById('slots').innerHTML=slots.length?slots.map(s=>{
-   const cls=s.status==='Ocupado'?'busy':s.status==='Disponible'?'available':'disabled';
-   const detail=s.status==='Ocupado'?`${esc(s.cliente)} · ${esc(s.servico)}`:s.status==='Disponible'?'Disponible para iniciar':'No disponible';
-   return `<div class="slot ${cls}"><strong>${esc(s.hora)}</strong><small>${detail}</small></div>`
- }).join(''):'<div class="empty">Studio cerrado.</div>';
-}
-
-function renderClients(clients){
- const q=(clientSearch.value||'').trim().toLowerCase();
- const filtered=clients.filter(c=>!q||[c.nome,c.telefone,c.documento,c.tipoDocumento,c.ultimoServico].join(' ').toLowerCase().includes(q));
- if(!filtered.length){document.getElementById('clients').innerHTML='<div class="empty">No se encontraron clientes.</div>';return}
- document.getElementById('clients').innerHTML=filtered.map(c=>`<div class="client-row"><div><div class="client-name">${esc(c.nome)}</div><div class="muted small">${esc(c.telefone)}</div></div><div><b>Último</b><div class="muted small">${esc(c.ultimoAtendimento)}</div></div><div><b>Servicio</b><div class="muted small">${esc(c.ultimoServico)}</div></div><div><b>Documento</b><div class="muted small">${esc(c.tipoDocumento||'—')} ${esc(c.documento||'')}</div></div><div class="client-action">${wa(c.whatsappUrl,'Abrir WhatsApp')}</div></div>`).join('');
-}
-
-async function marcarContactado(id){
- const token=localStorage.getItem('dl_admin_token');
- if(!token||!confirm('¿Marcar este contacto como realizado?'))return;
- try{const data=await apiPost({acao:'posvenda_marcar',id,token});if(data.status!=='ok')throw new Error(data.mensagem||'No se pudo actualizar');await load()}catch(e){alert(e.message)}
-}
-
-serviceEl.innerHTML=SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
-serviceEl.value='Depilación';
-dateEl.value=todayISO();
-document.getElementById('loginBtn').onclick=()=>{const t=tokenEl.value.trim();if(!t)return showLoginMessage('Introduce el código de acceso.',true);localStorage.setItem('dl_admin_token',t);showLoginMessage('');load()};
-document.getElementById('logoutBtn').onclick=()=>{localStorage.removeItem('dl_admin_token');location.reload()};
-document.getElementById('refresh').onclick=load;
-dateEl.onchange=load;serviceEl.onchange=load;
-clientSearch.oninput=()=>{if(lastData)renderClients(lastData.clientes)};
-document.getElementById('clearSearch').onclick=()=>{clientSearch.value='';if(lastData)renderClients(lastData.clientes)};
-document.getElementById('expenseDate').value=todayISO();
-document.getElementById('addExpense').onclick=async()=>{
- const token=localStorage.getItem('dl_admin_token');
- const data=document.getElementById('expenseDate').value;
- const categoria=document.getElementById('expenseCategory').value;
- const descricao=document.getElementById('expenseDescription').value.trim()||categoria;
- const valor=document.getElementById('expenseValue').value;
- const msg=document.getElementById('expenseMsg');
- if(!data||!valor){msg.innerHTML='<div class="error">Informe data e valor.</div>';return}
- try{const r=await apiPost({acao:'registrar_despesa',token,data,categoria,descricao,valor,recorrente:false});if(r.status!=='ok')throw new Error(r.mensagem||'No se pudo registrar');document.getElementById('expenseDescription').value='';document.getElementById('expenseValue').value='';msg.innerHTML='<div class="notice">Despesa registrada correctamente.</div>';await load();setTimeout(()=>msg.innerHTML='',2500)}catch(e){msg.innerHTML='<div class="error">'+esc(e.message)+'</div>'}
-};
-document.querySelectorAll('.period-btn').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedPeriod=btn.dataset.period;
-  const target=selectedPeriod==='today'?document.getElementById('fToday'):selectedPeriod==='week'?document.getElementById('fWeek'):document.getElementById('fMonth');
-  if(target){target.scrollIntoView({behavior:'smooth',block:'center'});}
-}));
-load();
-</script>
-</body>
-</html>
+const login=document.getElementById('login'),app=document.getElementById('app'),dateEl=document.getElementById('date'),serviceEl=document.getElementById('service');
+setupNav('agenda');serviceEl.innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join('');serviceEl.value='Depilación';dateEl.value=todayISO();setLogin();
+document.getElementById('refresh').onclick=loadData;dateEl.onchange=loadData;serviceEl.onchange=loadData;
+async function loadData(){const token=localStorage.getItem('dl_admin_token');if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:dateEl.value||todayISO(),servico:serviceEl.value});if(d.status!=='ok')throw new Error(d.mensagem||'No autorizado');lastData=d;render(d);login.classList.add('hidden');app.classList.remove('hidden');document.getElementById('logoutBtn').onclick=logout}catch(e){localStorage.removeItem('dl_admin_token');login.classList.remove('hidden');app.classList.add('hidden');document.getElementById('loginMsg').innerHTML='<div class="error">'+esc(e.message)+'</div>'}}
+function render(d){document.getElementById('todayLabel').textContent='Fecha consultada: '+d.hoje;document.getElementById('mToday').textContent=d.resumo.atendimientosHoje;document.getElementById('mWeek').textContent=d.resumo.atendimientosSemana;document.getElementById('mMonth').textContent=d.resumo.atendimientosMes;document.getElementById('dayCount').textContent=`${d.agendaHoje.length} reserva${d.agendaHoje.length===1?'':'s'}`;document.getElementById('agendaToday').innerHTML=d.agendaHoje.length?d.agendaHoje.map(a=>appointment(a)).join(''):'<div class="empty">No hay agendamientos para este día.</div>';document.getElementById('next7').innerHTML=d.proximos7Dias.length?d.proximos7Dias.map(a=>appointment(a,true)).join(''):'<div class="empty">No hay próximos agendamientos.</div>';document.getElementById('nextCard').innerHTML=d.resumo.proxima?appointment(d.resumo.proxima):'<div class="empty">No hay más citas.</div>';document.getElementById('postSummary').innerHTML=`<div class="next-highlight"><div class="time">${d.posVenda.length}</div><div class="muted">${d.posVenda.length?'contactos pendientes hoy':'Todo al día 🎉'}</div></div>`;document.getElementById('clientsMini').innerHTML=`<div class="next-highlight"><div class="time">${d.clientes.length}</div><div class="muted">clientes registrados</div></div>`;renderSlots(d.slots)}
+function renderSlots(slots){document.getElementById('slots').innerHTML=slots.length?slots.map(s=>`<div class="slot ${s.status==='Ocupado'?'busy':s.status==='Disponible'?'available':'disabled'}"><strong>${esc(s.hora)}</strong><small>${s.status==='Ocupado'?esc(s.cliente)+' · '+esc(s.servico):s.status}</small></div>`).join(''):'<div class="empty">Studio cerrado.</div>'}
+if(authPage())loadData();else setLogin();
+</script></body></html>
