@@ -130,7 +130,7 @@ function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&l
 function todayISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
 function wa(url,label='WhatsApp'){return url?`<a class="btn btn-wa" href="${esc(url)}" target="_blank" rel="noopener">📱 ${label}</a>`:''}
 function cal(url){return url?`<a class="btn btn-light" href="${esc(url)}" target="_blank" rel="noopener">🗓️ Calendar</a>`:''}
-function formatGs(v){return 'Gs '+Number(v||0).toLocaleString('es-PY');}
+function formatGs(v){return 'Gs '+Math.round(Number(v||0)).toLocaleString('es-PY');}
 function appointment(a,withDate=false){const value=Number(a.valor||0);return `<div class="item"><div class="item-top"><span>${withDate?esc(a.data)+' · ':''}${esc(a.hora)} · ${esc(a.cliente)}</span><span class="pill ${String(a.status).toLowerCase()==='confirmado'?'ok':''}">${esc(a.status||'Confirmado')}</span></div><div class="muted small">${esc(a.servico)} · ${esc(a.duracao)} min · termina ${esc(a.fim)}</div><div class="muted small">${esc(a.telefone)}${a.tipoDocumento?' · '+esc(a.tipoDocumento)+': '+esc(a.documento):''}</div><div class="muted small"><b>Valor:</b> ${value?formatGs(value):'Pendiente de informar'}</div><div class="actions">${wa(a.whatsappUrl)}${cal(a.calendarUrl)}<button class="btn btn-light" onclick="editarValor('${esc(a.id)}',${value||0})">💰 ${value?'Editar valor':'Informar valor'}</button></div></div>`}
 function nextCard(a){return a?appointment(a):'<div class="empty">No hay más citas.</div>'}
 
