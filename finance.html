@@ -80,11 +80,11 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
 <label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
 <button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
 </section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
-<a class="nav-link" data-module="agenda" href="admin.html?v=83">📅 Agenda</a>
-<a class="nav-link" data-module="financeiro" href="finance.html?v=83">💰 Finanzas</a>
-<a class="nav-link" data-module="relatorios" href="reports.html?v=83">📊 Informes</a>
-<a class="nav-link" data-module="clientes" href="clients.html?v=83">👤 Clientes</a>
-<a class="nav-link" data-module="posvenda" href="postventa.html?v=83">💬 Pós-venta</a>
+<a class="nav-link" data-module="agenda" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('agenda'), false) : true;">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('finance'), false) : true;">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('reports'), false) : true;">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('clients'), false) : true;">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('postventa'), false) : true;">💬 Pós-venta</a>
 </nav>
 <div class="page-head"><div><h2>Finanzas</h2><p id="todayLabel" class="muted small"></p></div><div class="filters"><div class="filter"><label>Mes consultado</label><input id="date" type="date"></div><button id="refresh" class="btn primary">Actualizar</button></div></div><div id="pageMsg"></div>
 <section class="kpi-grid"><div class="card kpi"><span>Facturación del mes</span><strong id="fMonth">Gs 0</strong><small>Ingresos registrados</small></div><div class="card kpi"><span>Despesas del mes</span><strong id="expenseMonth">Gs 0</strong><small>Fijas + variables</small></div><div class="card kpi"><span>Lucro líquido</span><strong id="profitMonth">Gs 0</strong><small>Faturación − despesas</small></div></section>
@@ -107,8 +107,8 @@ function setupNav(active){document.querySelectorAll('.nav-link').forEach(a=>a.cl
 function getCookieToken(){const m=document.cookie.match(/(?:^|;\s*)dl_admin_token=([^;]+)/);return m?decodeURIComponent(m[1]):'';}
 function getToken(){try{return localStorage.getItem('dl_admin_token')||sessionStorage.getItem('dl_admin_token')||getCookieToken()||'';}catch(e){return getCookieToken()||'';}}
 function saveToken(t){try{localStorage.setItem('dl_admin_token',t);sessionStorage.setItem('dl_admin_token',t);}catch(e){} document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure';}
-function clearToken(){try{clearToken();}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
-function logout(){clearToken();location.href='admin.html?v=83';}
+function clearToken(){try{localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
+function logout(){clearToken();if(EMBEDDED){try{window.parent.postMessage({type:'dl-logout'},location.origin);}catch(e){} return;}location.href='admin.html?v=83';}
 function authPage(){const token=getToken();if(!token){const here=location.pathname.split('/').pop()||'admin.html';if(here!=='admin.html'){location.href='admin.html?v=83&return='+encodeURIComponent(here);return false;}document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
 function goHome(){location.href='admin.html';}
 function appointment(a,withDate=false){
@@ -136,5 +136,22 @@ async function editarDespesa(id,valorAtual,categoria,descricao){const token=getT
 async function excluirDespesa(id){const token=getToken();if(!confirm('¿Excluir esta despesa? Esta acción no se puede deshacer.'))return;const r=await apiPost({acao:'excluir_despesa',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo excluir');await loadData();}
 function renderFinance(rows){const el=document.getElementById('financeTable');if(!rows.length){el.innerHTML='<div class="empty">No hay datos del mes.</div>';return}el.innerHTML=`<table class="table"><thead><tr><th>Servicio</th><th>Atenciones</th><th>Facturación</th><th>Pendientes</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.servico)}</td><td>${r.atendimientos}</td><td>${r.faturamento?formatGs(r.faturamento):'Gs 0'}</td><td>${r.pendenteValor||0}</td></tr>`).join('')}</tbody></table>`}
 document.getElementById('addExpense').onclick=async()=>{const token=getToken();const data=document.getElementById('expenseDate').value;const categoria=document.getElementById('expenseCategory').value;const descricao=document.getElementById('expenseDescription').value.trim()||categoria;const valor=document.getElementById('expenseValue').value;try{const r=await apiPost({acao:'registrar_despesa',token,data,categoria,descricao,valor,recorrente:false});if(r.status!=='ok')throw new Error(r.mensagem);document.getElementById('expenseDescription').value='';document.getElementById('expenseValue').value='';document.getElementById('expenseMsg').innerHTML='<div class="notice">Gasto registrado correctamente.</div>';await loadData();setTimeout(()=>document.getElementById('expenseMsg').innerHTML='',2000)}catch(e){document.getElementById('expenseMsg').innerHTML='<div class="error">'+esc(e.message)+'</div>'}};
-if(authPage())loadData();else setLogin();
+const EMBEDDED = new URLSearchParams(location.search).get('embedded') === '1';
+function reportHeight(){try{window.parent.postMessage({type:'dl-module-height',height:Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},location.origin);}catch(e){}}
+if(EMBEDDED){
+  document.getElementById('login')?.classList.add('hidden');
+  document.getElementById('app')?.classList.remove('hidden');
+  window.addEventListener('message',function(ev){
+    if(ev.origin!==location.origin) return;
+    if(ev.data && ev.data.type==='dl-auth' && ev.data.token){
+      saveToken(ev.data.token); loadData().then(reportHeight).catch(reportHeight);
+    }
+    if(ev.data && ev.data.type==='dl-logout'){clearToken();window.parent.postMessage({type:'dl-logout'},location.origin);}
+  });
+  window.addEventListener('load',()=>setTimeout(reportHeight,100));
+}else{
+  if(authPage())loadData();else setLogin();
+}
+
+if(EMBEDDED){try{new MutationObserver(reportHeight).observe(document.body,{subtree:true,childList:true,attributes:true});window.addEventListener('resize',reportHeight);}catch(e){}}
 </script></body></html>

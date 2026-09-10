@@ -80,11 +80,11 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
 <label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
 <button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
 </section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
-<a class="nav-link" data-module="agenda" href="admin.html?v=83">📅 Agenda</a>
-<a class="nav-link" data-module="financeiro" href="finance.html?v=83">💰 Finanzas</a>
-<a class="nav-link" data-module="relatorios" href="reports.html?v=83">📊 Informes</a>
-<a class="nav-link" data-module="clientes" href="clients.html?v=83">👤 Clientes</a>
-<a class="nav-link" data-module="posvenda" href="postventa.html?v=83">💬 Pós-venta</a>
+<a class="nav-link" data-module="agenda" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('agenda'), false) : true;">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('finance'), false) : true;">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('reports'), false) : true;">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('clients'), false) : true;">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('postventa'), false) : true;">💬 Pós-venta</a>
 </nav>
 <div class="page-head"><div><h2>Pós-venda</h2><p id="todayLabel" class="muted small"></p></div><button id="refresh" class="btn primary">Actualizar</button></div>
 <section class="kpi-grid"><div class="card kpi alert"><span>Contactos pendientes</span><strong id="countPost">0</strong><small>Para hoy</small></div><div class="card kpi"><span>Acción</span><strong>Contactar</strong><small>Enviar WhatsApp y registrar</small></div><div class="card kpi"><span>Estado</span><strong id="postStatus">—</strong><small>Actualizado desde la agenda</small></div></section>
@@ -103,8 +103,8 @@ function setupNav(active){document.querySelectorAll('.nav-link').forEach(a=>a.cl
 function getCookieToken(){const m=document.cookie.match(/(?:^|;\s*)dl_admin_token=([^;]+)/);return m?decodeURIComponent(m[1]):'';}
 function getToken(){try{return localStorage.getItem('dl_admin_token')||sessionStorage.getItem('dl_admin_token')||getCookieToken()||'';}catch(e){return getCookieToken()||'';}}
 function saveToken(t){try{localStorage.setItem('dl_admin_token',t);sessionStorage.setItem('dl_admin_token',t);}catch(e){} document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure';}
-function clearToken(){try{clearToken();}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
-function logout(){clearToken();location.href='admin.html?v=83';}
+function clearToken(){try{localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
+function logout(){clearToken();if(EMBEDDED){try{window.parent.postMessage({type:'dl-logout'},location.origin);}catch(e){} return;}location.href='admin.html?v=83';}
 function authPage(){const token=getToken();if(!token){const here=location.pathname.split('/').pop()||'admin.html';if(here!=='admin.html'){location.href='admin.html?v=83&return='+encodeURIComponent(here);return false;}document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
 function goHome(){location.href='admin.html';}
 function appointment(a,withDate=false){
@@ -126,5 +126,22 @@ function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=doc
 
 const login=document.getElementById('login'),app=document.getElementById('app');setupNav('posvenda');setLogin();document.getElementById('refresh').onclick=loadData;
 async function loadData(){const token=getToken();if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:todayISO()});if(d.status!=='ok')throw new Error(d.mensagem||'No autorizado');lastData=d;document.getElementById('todayLabel').textContent='Fecha: '+d.hoje;document.getElementById('countPost').textContent=d.posVenda.length;document.getElementById('postStatus').textContent=d.posVenda.length?'Pendiente':'Al día';document.getElementById('post').innerHTML=d.posVenda.length?d.posVenda.map(p=>`<div class="item"><div class="item-top"><span>${esc(p.cliente)}</span><span class="pill busy">Pendiente</span></div><div class="muted small">${esc(p.servico)} · contacto: ${esc(p.proximoContato)}</div><div class="muted small">${(String(p.telefone||'').trim() && !String(p.telefone).includes('#ERROR'))?esc(p.telefone):'Telefone não informado'}</div><div class="muted small">${esc(p.mensagem)}</div><div class="actions">${wa(p.whatsappUrlComMensagem,'Enviar WhatsApp')}<button class="btn btn-light" onclick="marcarContactado('${esc(p.id)}')">✓ Marcar contactado</button></div></div>`).join(''):'<div class="next-highlight"><div class="time">0</div><div class="muted">Todo al día 🎉</div></div>';login.classList.add('hidden');app.classList.remove('hidden')}catch(e){const msg=String(e.message||e);if(msg.toLowerCase().includes('no autorizado')||msg.toLowerCase().includes('não autorizado')){clearToken();login.classList.remove('hidden');app.classList.add('hidden');}else{app.classList.remove('hidden');login.classList.add('hidden');const box=document.getElementById('pageMsg');if(box)box.innerHTML='<div class="error">'+esc(msg)+'</div>';else alert(msg);}}}
-if(authPage())loadData();else setLogin();
+const EMBEDDED = new URLSearchParams(location.search).get('embedded') === '1';
+function reportHeight(){try{window.parent.postMessage({type:'dl-module-height',height:Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},location.origin);}catch(e){}}
+if(EMBEDDED){
+  document.getElementById('login')?.classList.add('hidden');
+  document.getElementById('app')?.classList.remove('hidden');
+  window.addEventListener('message',function(ev){
+    if(ev.origin!==location.origin) return;
+    if(ev.data && ev.data.type==='dl-auth' && ev.data.token){
+      saveToken(ev.data.token); loadData().then(reportHeight).catch(reportHeight);
+    }
+    if(ev.data && ev.data.type==='dl-logout'){clearToken();window.parent.postMessage({type:'dl-logout'},location.origin);}
+  });
+  window.addEventListener('load',()=>setTimeout(reportHeight,100));
+}else{
+  if(authPage())loadData();else setLogin();
+}
+
+if(EMBEDDED){try{new MutationObserver(reportHeight).observe(document.body,{subtree:true,childList:true,attributes:true});window.addEventListener('resize',reportHeight);}catch(e){}}
 </script></body></html>
