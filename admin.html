@@ -12,7 +12,8 @@ function openModule(mod){const map={agenda:'agenda.html',finance:'finance.html',
 window.openModule=openModule;
 function showPanel(){login.hidden=true;panel.hidden=false;openModule('agenda')}
 function doLogin(){const t=document.getElementById('token').value.trim();if(!t){document.getElementById('msg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);showPanel();}
-document.getElementById('loginBtn').onclick=doLogin;document.getElementById('token').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});document.querySelectorAll('[data-mod]').forEach(b=>b.onclick=()=>openModule(b.dataset.mod));document.getElementById('logout').onclick=()=>{clearToken();frame.src='about:blank';panel.hidden=true;login.hidden=false;document.getElementById('token').value=''};
+document.getElementById('loginBtn').onclick=doLogin;document.getElementById('token').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});document.querySelectorAll('[data-mod]').forEach(b=>b.addEventListener('click',()=>openModule(b.dataset.mod)));
+window.addEventListener('message',e=>{if(e.origin!==location.origin)return;if(e.data?.type==='dl-nav'&&e.data.mod)openModule(e.data.mod);});document.getElementById('logout').onclick=()=>{clearToken();frame.src='about:blank';panel.hidden=true;login.hidden=false;document.getElementById('token').value=''};
 frame.addEventListener('load',()=>{try{frame.contentWindow.postMessage({type:'dl-auth',token:getToken()},location.origin)}catch(e){}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin)return;if(e.data?.type==='dl-module-height')frame.style.height=Math.max(700,Number(e.data.height||900))+'px';if(e.data?.type==='dl-logout'){clearToken();document.getElementById('logout').click()}});
 if(getToken())showPanel();

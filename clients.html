@@ -74,22 +74,33 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
   .table-wrap{border:1px solid var(--line);border-radius:12px}
   .table{min-width:620px}
 }
-</style></head><body><div class="wrap"><div id="pageMsg"></div><section id="login" class="login">
+</style>
+<style>
+body.embedded-mode{padding-top:0}
+body.embedded-mode > .wrap > .login{display:none!important}
+body.embedded-mode > .wrap > main#app > header,
+body.embedded-mode > .wrap > main#app > nav.module-nav{display:none!important}
+body.embedded-mode > .wrap{width:100%;padding-top:0}
+body.embedded-mode > .wrap > main#app{display:block!important}
+body.embedded-mode .footer{display:none!important}
+@media(max-width:700px){body.embedded-mode .page-head h2{font-size:25px}body.embedded-mode .card{border-radius:14px}}
+</style>
+</head><body><script>if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded-mode');</script><div class="wrap"><div id="pageMsg"></div><section id="login" class="login">
 <div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Beauty Studio · Administración</small></div></div>
 <h2>Panel administrativo</h2><p>Accede a los módulos del Studio desde un solo lugar.</p>
 <label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
 <button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
 </section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
-<a class="nav-link" data-module="agenda" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('agenda'), false) : true;">📅 Agenda</a>
-<a class="nav-link" data-module="financeiro" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('finance'), false) : true;">💰 Finanzas</a>
-<a class="nav-link" data-module="relatorios" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('reports'), false) : true;">📊 Informes</a>
-<a class="nav-link" data-module="clientes" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('clients'), false) : true;">👤 Clientes</a>
-<a class="nav-link" data-module="posvenda" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('postventa'), false) : true;">💬 Pós-venta</a>
+<a class="nav-link" data-module="agenda" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'agenda'},location.origin);return false;} return true;">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'finance'},location.origin);return false;} return true;">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'reports'},location.origin);return false;} return true;">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'clients'},location.origin);return false;} return true;">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'postventa'},location.origin);return false;} return true;">💬 Pós-venta</a>
 </nav>
 <div class="page-head"><div><h2>Clientes</h2><p id="todayLabel" class="muted small"></p></div><button id="refresh" class="btn primary">Actualizar</button></div>
 <section class="kpi-grid"><div class="card kpi"><span>Clientes registrados</span><strong id="countClients">0</strong><small>Base actual</small></div><div class="card kpi"><span>Pós-venda pendiente</span><strong id="countPost">0</strong><small>Para hoy</small></div><div class="card kpi"><span>Acción</span><strong>WhatsApp</strong><small>Contacto directo</small></div></section>
 <section class="card"><div class="section-head"><div><h3>👤 Base de clientes</h3><p class="muted small">Busca por nombre, teléfono o documento.</p></div></div><div class="search-row"><input id="clientSearch" placeholder="Buscar cliente"><button id="clearSearch" class="btn btn-light">Limpiar</button></div><div id="clients" class="table-wrap"></div></section>
-<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">El seguimiento detallado está en su propio módulo.</p></div></div><a class="btn primary" href="#" onclick="return window.parent && window.parent !== window ? (window.parent.openModule('postventa'), false) : true;">Abrir pós-venda</a></section>
+<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">El seguimiento detallado está en su propio módulo.</p></div></div><a class="btn primary" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'postventa'},location.origin);return false;} return true;">Abrir pós-venda</a></section>
 <footer class="footer">Dulce de Leche Beauty Studio</footer></main></div><script>
 const API='/api/agenda';
 const SERVICES=['Micro pigmentación de Labios','Micro pigmentación de Cejas','Neutralización de Labios','Extensión de Pestañas','Depilación','Laminado de Cejas','Lifting de Pestañas','Diseño de Cejas','Diseño de Cejas con Henna','Diseño de Cejas con Tinte','Servicio de Manicura','Servicio de Pedicure'];
