@@ -198,24 +198,24 @@ async function editarValor(id, atual){
  const serv=appt?.servico||'';
  let msg='Informe o valor cobrado em Gs:';
  if(serv==='Depilación'){
-   msg='Depilación — informe o valor cobrado em Gs.
+   msg=`Depilación — informe o valor cobrado em Gs:
 
 Axilas: 30.000
 Bozo: 30.000
 Media Piernas: 85.000
-Pierna completa: 150.000';
+Pierna completa: 150.000`;
  } else if(serv==='Extensión de Pestañas'){
    msg='Extensión de Pestañas — valor cobrado (desde Gs 200.000):';
  } else if(serv==='Servicio de Manicura'){
-   msg='Manicura — informe o valor cobrado em Gs.
+   msg=`Manicura — informe o valor cobrado em Gs:
 
 Tradicional: 70.000
-Semipermanente: 90.000';
+Semipermanente: 90.000`;
  } else if(serv==='Servicio de Pedicure'){
-   msg='Pedicure — informe o valor cobrado em Gs.
+   msg=`Pedicure — informe o valor cobrado em Gs:
 
 Tradicional: 80.000
-Semipermanente: 100.000';
+Semipermanente: 100.000`;
  }
  const entrada=prompt(msg, atual?String(Math.round(atual)):'');
  if(entrada===null)return;
