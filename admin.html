@@ -45,17 +45,46 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
 .footer{text-align:center;color:var(--brown2);font-size:12px;margin-top:22px}
 @media(max-width:900px){.agenda-grid{grid-template-columns:1fr}.kpi-grid,.compare-grid{grid-template-columns:1fr 1fr}.expense-form{grid-template-columns:1fr 1fr}.expense-row{grid-template-columns:1fr 1fr}.client-row{grid-template-columns:1.4fr 1fr 1fr}.client-row .client-action{grid-column:1/-1}}
 @media(max-width:700px){.module-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nav-link{min-height:46px;font-size:13px}.wrap{width:min(100% - 16px,1180px);padding-top:12px}.brand h1{font-size:23px}.brand img{width:50px;height:50px}.page-head h2{font-size:27px}.kpi-grid,.compare-grid{grid-template-columns:1fr}.kpi strong{font-size:27px}.filters,.filter{width:100%}.filters input,.filters select{width:100%}.timeline{grid-template-columns:repeat(2,1fr)}.expense-form{grid-template-columns:1fr}.expense-row{grid-template-columns:1fr}.module-nav{margin-right:0}.bar-chart{height:240px}}
+
+/* V8.2 — mobile-first refinements */
+@media(max-width:700px){
+  body{font-size:14px}
+  header{align-items:flex-start;gap:10px}
+  header .btn{flex:0 0 auto;padding:9px 11px;font-size:12px}
+  .module-nav{grid-template-columns:repeat(2,minmax(0,1fr));position:sticky;top:0;z-index:20;background:rgba(255,252,246,.96);backdrop-filter:blur(8px);padding:8px 0 10px;margin:0 -2px 14px}
+  .module-nav .nav-link:last-child{grid-column:1/-1}
+  .nav-link{min-height:48px;border-radius:14px;padding:10px 8px}
+  .page-head{display:block}
+  .page-head .filters{margin-top:12px}
+  .agenda-grid{display:block}
+  .agenda-grid>aside{display:block}
+  .card{padding:15px;border-radius:16px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .kpi{padding:14px}.kpi strong{font-size:25px}
+  .timeline{grid-template-columns:1fr 1fr;gap:7px}
+  .slot{padding:9px}.slot strong{font-size:14px}
+  .item-top{font-size:15px}
+  .actions{gap:6px}.actions .btn{flex:1 1 auto;text-align:center}
+  .expense-form,.expense-row,.client-row{grid-template-columns:1fr!important}
+  .compare-grid{grid-template-columns:1fr}
+  .chart-card{overflow:hidden}
+  .bar-chart{height:230px;gap:5px;padding-right:8px}
+  .bar-group{min-width:24px}.bar{max-width:24px}
+  .bar-value{font-size:8px}
+  .table-wrap{border:1px solid var(--line);border-radius:12px}
+  .table{min-width:620px}
+}
 </style></head><body><div class="wrap"><section id="login" class="login">
 <div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Beauty Studio · Administración</small></div></div>
 <h2>Panel administrativo</h2><p>Accede a los módulos del Studio desde un solo lugar.</p>
 <label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
 <button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
 </section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
-<a class="nav-link" data-module="agenda" href="admin.html?v=81">📅 Agenda</a>
-<a class="nav-link" data-module="financeiro" href="finanças.html?v=81">💰 Finanzas</a>
-<a class="nav-link" data-module="relatorios" href="relatorios.html?v=81">📊 Informes</a>
-<a class="nav-link" data-module="clientes" href="clientes.html?v=81">👤 Clientes</a>
-<a class="nav-link" data-module="posvenda" href="postventa.html?v=81">💬 Pós-venta</a>
+<a class="nav-link" data-module="agenda" href="admin.html?v=82">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="finance.html?v=82">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="reports.html?v=82">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="clients.html?v=82">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="postventa.html?v=82">💬 Pós-venta</a>
 </nav>
 <div class="page-head"><div><h2>Agenda del Studio</h2><p id="todayLabel" class="muted small"></p></div><div class="filters"><div class="filter"><label>Agenda del día</label><input id="date" type="date"></div><div class="filter"><label>Disponibilidad para</label><select id="service"></select></div><button id="refresh" class="btn primary">Actualizar</button></div></div><div id="pageMsg"></div>
 <section class="kpi-grid">
@@ -70,8 +99,8 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
 </div>
 <aside>
 <section class="card"><div class="section-head"><div><h3>🕐 Próxima cita</h3><p class="muted small">Siguiente atención del día.</p></div></div><div id="nextCard"></div></section>
-<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">Pendientes de hoy.</p></div></div><div id="postSummary"></div><a class="btn primary" href="postventa.html?v=81">Abrir pós-venda</a></section>
-<section class="card"><div class="section-head"><div><h3>👤 Clientes</h3><p class="muted small">Base del Studio.</p></div></div><div id="clientsMini"></div><a class="btn btn-light" href="clientes.html?v=81">Ver clientes</a></section>
+<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">Pendientes de hoy.</p></div></div><div id="postSummary"></div><a class="btn primary" href="postventa.html?v=82">Abrir pós-venda</a></section>
+<section class="card"><div class="section-head"><div><h3>👤 Clientes</h3><p class="muted small">Base del Studio.</p></div></div><div id="clientsMini"></div><a class="btn btn-light" href="clients.html?v=82">Ver clientes</a></section>
 </aside></div>
 <footer class="footer">Dulce de Leche Beauty Studio</footer></main></div><script>
 const API='/api/agenda';
@@ -80,19 +109,21 @@ let lastData=null;
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));}
 function todayISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}
 function formatGs(v){return 'Gs '+Math.round(Number(v||0)).toLocaleString('es-PY');}
-function wa(url,label='WhatsApp'){return url?`<a class="btn btn-wa" href="${esc(url)}" target="_blank" rel="noopener">📱 ${label}</a>`:'';}
+function wa(url,label='WhatsApp'){const u=String(url||'');return /^https:\/\/wa\.me\//i.test(u)?`<a class="btn btn-wa" href="${esc(u)}" target="_blank" rel="noopener">📱 ${label}</a>`:'';}
 function cal(url){return url?`<a class="btn btn-light" href="${esc(url)}" target="_blank" rel="noopener">🗓️ Calendar</a>`:'';}
 async function apiPost(data){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});const t=await r.text();let j;try{j=JSON.parse(t)}catch(e){throw new Error('La API devolvió una respuesta no válida.')};if(!r.ok)throw new Error(j.mensagem||'Error de conexión');return j;}
 function setupNav(active){document.querySelectorAll('.nav-link').forEach(a=>a.classList.toggle('active',a.dataset.module===active));}
-function logout(){localStorage.removeItem('dl_admin_token');location.href='admin.html';}
-function authPage(){const token=localStorage.getItem('dl_admin_token');if(!token){document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
+function getToken(){return localStorage.getItem('dl_admin_token')||sessionStorage.getItem('dl_admin_token')||'';}
+function saveToken(t){localStorage.setItem('dl_admin_token',t);sessionStorage.setItem('dl_admin_token',t);}
+function logout(){localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');location.href='admin.html?v=82';}
+function authPage(){const token=getToken();if(!token){document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
 function goHome(){location.href='admin.html';}
 function appointment(a,withDate=false){
  const value=Number(a.valor||0);
  return `<div class="item"><div class="item-top"><span>${withDate?esc(a.data)+' · ':''}${esc(a.hora)} · ${esc(a.cliente)}</span><span class="pill ${String(a.status).toLowerCase()==='confirmado'?'ok':''}">${esc(a.status||'Confirmado')}</span></div><div class="muted small">${esc(a.servico)} · ${esc(a.duracao)} min · termina ${esc(a.fim)}</div><div class="muted small">${(String(a.telefone||'').trim() && !String(a.telefone).includes('#ERROR'))?esc(a.telefone):'Telefone não informado'}${a.tipoDocumento && !String(a.documento||'').includes('#ERROR')?' · '+esc(a.tipoDocumento)+': '+esc(a.documento):''}</div><div class="muted small"><b>Valor:</b> ${value?formatGs(value):'Pendiente de informar'}</div><div class="actions">${wa(a.whatsappUrl)}${cal(a.calendarUrl)}<button class="btn btn-light" onclick="editarValor('${esc(a.id)}',${value||0})">💰 ${value?'Editar valor':'Informar valor'}</button></div></div>`;
 }
 async function editarValor(id,atual){
- const token=localStorage.getItem('dl_admin_token');if(!token)return;
+ const token=getToken();if(!token)return;
  const appt=(lastData?.agendaHoje||[]).concat(lastData?.proximos7Dias||[]).find(a=>String(a.id)===String(id));const serv=appt?.servico||'';let msg='Informe el valor cobrado en Gs:';
  if(serv==='Depilación')msg=`Depilación:\n\nAxilas: 30.000\nBozo: 30.000\nMedia Piernas: 85.000\nPierna completa: 150.000`;
  else if(serv==='Extensión de Pestañas')msg='Extensión de Pestañas — valor cobrado (desde Gs 200.000):';
@@ -101,13 +132,13 @@ async function editarValor(id,atual){
  const input=prompt(msg,atual?String(Math.round(atual)):'');if(input===null)return;const valor=Number(String(input).replace(/[^0-9]/g,''));if(!isFinite(valor)||valor<0)return alert('Valor inválido.');
  const r=await apiPost({acao:'admin_valor',id,valor,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();
 }
-async function marcarContactado(id){const token=localStorage.getItem('dl_admin_token');if(!token||!confirm('¿Marcar este contacto como realizado?'))return;const r=await apiPost({acao:'posvenda_marcar',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();}
-function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=document.getElementById('token').value.trim();if(!t){document.getElementById('loginMsg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}localStorage.setItem('dl_admin_token',t);loadData();};}
+async function marcarContactado(id){const token=getToken();if(!token||!confirm('¿Marcar este contacto como realizado?'))return;const r=await apiPost({acao:'posvenda_marcar',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();}
+function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=document.getElementById('token').value.trim();if(!t){document.getElementById('loginMsg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);loadData();};}
 
 const login=document.getElementById('login'),app=document.getElementById('app'),dateEl=document.getElementById('date'),serviceEl=document.getElementById('service');
 setupNav('agenda');serviceEl.innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join('');serviceEl.value='Depilación';dateEl.value=todayISO();setLogin();
 document.getElementById('refresh').onclick=loadData;dateEl.onchange=loadData;serviceEl.onchange=loadData;
-async function loadData(){const token=localStorage.getItem('dl_admin_token');if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:dateEl.value||todayISO(),servico:serviceEl.value});if(d.status!=='ok')throw new Error(d.mensagem||'No autorizado');lastData=d;render(d);login.classList.add('hidden');app.classList.remove('hidden');document.getElementById('logoutBtn').onclick=logout}catch(e){localStorage.removeItem('dl_admin_token');login.classList.remove('hidden');app.classList.add('hidden');document.getElementById('loginMsg').innerHTML='<div class="error">'+esc(e.message)+'</div>'}}
+async function loadData(){const token=getToken();if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:dateEl.value||todayISO(),servico:serviceEl.value});if(d.status!=='ok')throw new Error(d.mensagem||'No autorizado');lastData=d;render(d);login.classList.add('hidden');app.classList.remove('hidden');document.getElementById('logoutBtn').onclick=logout}catch(e){const msg=String(e.message||e);if(msg.toLowerCase().includes('no autorizado')||msg.toLowerCase().includes('não autorizado')){localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');login.classList.remove('hidden');app.classList.add('hidden');}else{app.classList.remove('hidden');login.classList.add('hidden');const box=document.getElementById('pageMsg');if(box)box.innerHTML='<div class="error">'+esc(msg)+'</div>';else alert(msg);}}}
 function render(d){document.getElementById('todayLabel').textContent='Fecha consultada: '+d.hoje;document.getElementById('mToday').textContent=d.resumo.atendimentosHoje;document.getElementById('mWeek').textContent=d.resumo.atendimentosSemana;document.getElementById('mMonth').textContent=d.resumo.atendimentosMes;document.getElementById('dayCount').textContent=`${d.agendaHoje.length} reserva${d.agendaHoje.length===1?'':'s'}`;document.getElementById('agendaToday').innerHTML=d.agendaHoje.length?d.agendaHoje.map(a=>appointment(a)).join(''):'<div class="empty">No hay agendamientos para este día.</div>';document.getElementById('next7').innerHTML=d.proximos7Dias.length?d.proximos7Dias.map(a=>appointment(a,true)).join(''):'<div class="empty">No hay próximos agendamientos.</div>';document.getElementById('nextCard').innerHTML=d.resumo.proxima?appointment(d.resumo.proxima):'<div class="empty">No hay más citas.</div>';document.getElementById('postSummary').innerHTML=`<div class="next-highlight"><div class="time">${d.posVenda.length}</div><div class="muted">${d.posVenda.length?'contactos pendientes hoy':'Todo al día 🎉'}</div></div>`;document.getElementById('clientsMini').innerHTML=`<div class="next-highlight"><div class="time">${d.clientes.length}</div><div class="muted">clientes registrados</div></div>`;renderSlots(d.slots)}
 function renderSlots(slots){document.getElementById('slots').innerHTML=slots.length?slots.map(s=>`<div class="slot ${s.status==='Ocupado'?'busy':s.status==='Disponible'?'available':'disabled'}"><strong>${esc(s.hora)}</strong><small>${s.status==='Ocupado'?esc(s.cliente)+' · '+esc(s.servico):s.status}</small></div>`).join(''):'<div class="empty">Studio cerrado.</div>'}
 if(authPage())loadData();else setLogin();
