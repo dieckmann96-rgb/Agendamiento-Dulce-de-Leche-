@@ -160,7 +160,7 @@ async function load(){
 
 function render(data){
  document.getElementById('todayLabel').textContent=`Fecha consultada: ${data.hoje}`;
- document.getElementById('mToday').textContent=data.resumo.atendimientosHoje;
+ document.getElementById('mToday').textContent=data.resumo.atendimentosHoje;
  document.getElementById('mWeek').textContent=data.resumo.atendimentosSemana;
  document.getElementById('mMonth').textContent=data.resumo.atendimentosMes;
  document.getElementById('mPost').textContent=data.resumo.posVendaPendente;
@@ -194,7 +194,30 @@ function renderFinance(rows){
 async function editarValor(id, atual){
  const token=localStorage.getItem('dl_admin_token');
  if(!token)return;
- const entrada=prompt('Informe o valor cobrado em Gs:', atual?String(Math.round(atual)):'');
+ const appt=(lastData?.agendaHoje||[]).concat(lastData?.proximos7Dias||[]).find(a=>String(a.id)===String(id));
+ const serv=appt?.servico||'';
+ let msg='Informe o valor cobrado em Gs:';
+ if(serv==='Depilación'){
+   msg='Depilación — informe o valor cobrado em Gs.
+
+Axilas: 30.000
+Bozo: 30.000
+Media Piernas: 85.000
+Pierna completa: 150.000';
+ } else if(serv==='Extensión de Pestañas'){
+   msg='Extensión de Pestañas — valor cobrado (desde Gs 200.000):';
+ } else if(serv==='Servicio de Manicura'){
+   msg='Manicura — informe o valor cobrado em Gs.
+
+Tradicional: 70.000
+Semipermanente: 90.000';
+ } else if(serv==='Servicio de Pedicure'){
+   msg='Pedicure — informe o valor cobrado em Gs.
+
+Tradicional: 80.000
+Semipermanente: 100.000';
+ }
+ const entrada=prompt(msg, atual?String(Math.round(atual)):'');
  if(entrada===null)return;
  const valor=Number(String(entrada).replace(/[^0-9]/g,''));
  if(!isFinite(valor)||valor<0){alert('Valor inválido.');return}
