@@ -80,11 +80,11 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
 <label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
 <button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
 </section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
-<a class="nav-link" data-module="agenda" href="admin.html?v=82">📅 Agenda</a>
-<a class="nav-link" data-module="financeiro" href="finance.html?v=82">💰 Finanzas</a>
-<a class="nav-link" data-module="relatorios" href="reports.html?v=82">📊 Informes</a>
-<a class="nav-link" data-module="clientes" href="clients.html?v=82">👤 Clientes</a>
-<a class="nav-link" data-module="posvenda" href="postventa.html?v=82">💬 Pós-venta</a>
+<a class="nav-link" data-module="agenda" href="admin.html?v=83">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="finance.html?v=83">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="reports.html?v=83">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="clients.html?v=83">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="postventa.html?v=83">💬 Pós-venta</a>
 </nav>
 <div class="page-head"><div><h2>Agenda del Studio</h2><p id="todayLabel" class="muted small"></p></div><div class="filters"><div class="filter"><label>Agenda del día</label><input id="date" type="date"></div><div class="filter"><label>Disponibilidad para</label><select id="service"></select></div><button id="refresh" class="btn primary">Actualizar</button></div></div><div id="pageMsg"></div>
 <section class="kpi-grid">
@@ -99,8 +99,8 @@ button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown
 </div>
 <aside>
 <section class="card"><div class="section-head"><div><h3>🕐 Próxima cita</h3><p class="muted small">Siguiente atención del día.</p></div></div><div id="nextCard"></div></section>
-<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">Pendientes de hoy.</p></div></div><div id="postSummary"></div><a class="btn primary" href="postventa.html?v=82">Abrir pós-venda</a></section>
-<section class="card"><div class="section-head"><div><h3>👤 Clientes</h3><p class="muted small">Base del Studio.</p></div></div><div id="clientsMini"></div><a class="btn btn-light" href="clients.html?v=82">Ver clientes</a></section>
+<section class="card"><div class="section-head"><div><h3>💬 Pós-venda</h3><p class="muted small">Pendientes de hoy.</p></div></div><div id="postSummary"></div><a class="btn primary" href="postventa.html?v=83">Abrir pós-venda</a></section>
+<section class="card"><div class="section-head"><div><h3>👤 Clientes</h3><p class="muted small">Base del Studio.</p></div></div><div id="clientsMini"></div><a class="btn btn-light" href="clients.html?v=83">Ver clientes</a></section>
 </aside></div>
 <footer class="footer">Dulce de Leche Beauty Studio</footer></main></div><script>
 const API='/api/agenda';
@@ -113,10 +113,12 @@ function wa(url,label='WhatsApp'){const u=String(url||'');return /^https:\/\/wa\
 function cal(url){return url?`<a class="btn btn-light" href="${esc(url)}" target="_blank" rel="noopener">🗓️ Calendar</a>`:'';}
 async function apiPost(data){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});const t=await r.text();let j;try{j=JSON.parse(t)}catch(e){throw new Error('La API devolvió una respuesta no válida.')};if(!r.ok)throw new Error(j.mensagem||'Error de conexión');return j;}
 function setupNav(active){document.querySelectorAll('.nav-link').forEach(a=>a.classList.toggle('active',a.dataset.module===active));}
-function getToken(){return localStorage.getItem('dl_admin_token')||sessionStorage.getItem('dl_admin_token')||'';}
-function saveToken(t){localStorage.setItem('dl_admin_token',t);sessionStorage.setItem('dl_admin_token',t);}
-function logout(){localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');location.href='admin.html?v=82';}
-function authPage(){const token=getToken();if(!token){document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
+function getCookieToken(){const m=document.cookie.match(/(?:^|;\s*)dl_admin_token=([^;]+)/);return m?decodeURIComponent(m[1]):'';}
+function getToken(){try{return localStorage.getItem('dl_admin_token')||sessionStorage.getItem('dl_admin_token')||getCookieToken()||'';}catch(e){return getCookieToken()||'';}}
+function saveToken(t){try{localStorage.setItem('dl_admin_token',t);sessionStorage.setItem('dl_admin_token',t);}catch(e){} document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure';}
+function clearToken(){try{clearToken();}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
+function logout(){clearToken();location.href='admin.html?v=83';}
+function authPage(){const token=getToken();if(!token){const here=location.pathname.split('/').pop()||'admin.html';if(here!=='admin.html'){location.href='admin.html?v=83&return='+encodeURIComponent(here);return false;}document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
 function goHome(){location.href='admin.html';}
 function appointment(a,withDate=false){
  const value=Number(a.valor||0);
@@ -133,12 +135,12 @@ async function editarValor(id,atual){
  const r=await apiPost({acao:'admin_valor',id,valor,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();
 }
 async function marcarContactado(id){const token=getToken();if(!token||!confirm('¿Marcar este contacto como realizado?'))return;const r=await apiPost({acao:'posvenda_marcar',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();}
-function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=document.getElementById('token').value.trim();if(!t){document.getElementById('loginMsg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);loadData();};}
+function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=document.getElementById('token').value.trim();if(!t){document.getElementById('loginMsg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);const ret=new URLSearchParams(location.search).get('return');if(ret&&/^(finance|reports|clients|postventa)\.html$/.test(ret)){location.href=ret+'?v=83';return;}loadData();};}
 
 const login=document.getElementById('login'),app=document.getElementById('app'),dateEl=document.getElementById('date'),serviceEl=document.getElementById('service');
 setupNav('agenda');serviceEl.innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join('');serviceEl.value='Depilación';dateEl.value=todayISO();setLogin();
 document.getElementById('refresh').onclick=loadData;dateEl.onchange=loadData;serviceEl.onchange=loadData;
-async function loadData(){const token=getToken();if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:dateEl.value||todayISO(),servico:serviceEl.value});if(d.status!=='ok')throw new Error(d.mensagem||'No autorizado');lastData=d;render(d);login.classList.add('hidden');app.classList.remove('hidden');document.getElementById('logoutBtn').onclick=logout}catch(e){const msg=String(e.message||e);if(msg.toLowerCase().includes('no autorizado')||msg.toLowerCase().includes('não autorizado')){localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');login.classList.remove('hidden');app.classList.add('hidden');}else{app.classList.remove('hidden');login.classList.add('hidden');const box=document.getElementById('pageMsg');if(box)box.innerHTML='<div class="error">'+esc(msg)+'</div>';else alert(msg);}}}
+async function loadData(){const token=getToken();if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:dateEl.value||todayISO(),servico:serviceEl.value});if(d.status!=='ok')throw new Error(d.mensagem||'No autorizado');lastData=d;render(d);login.classList.add('hidden');app.classList.remove('hidden');document.getElementById('logoutBtn').onclick=logout}catch(e){const msg=String(e.message||e);if(msg.toLowerCase().includes('no autorizado')||msg.toLowerCase().includes('não autorizado')){clearToken();login.classList.remove('hidden');app.classList.add('hidden');}else{app.classList.remove('hidden');login.classList.add('hidden');const box=document.getElementById('pageMsg');if(box)box.innerHTML='<div class="error">'+esc(msg)+'</div>';else alert(msg);}}}
 function render(d){document.getElementById('todayLabel').textContent='Fecha consultada: '+d.hoje;document.getElementById('mToday').textContent=d.resumo.atendimentosHoje;document.getElementById('mWeek').textContent=d.resumo.atendimentosSemana;document.getElementById('mMonth').textContent=d.resumo.atendimentosMes;document.getElementById('dayCount').textContent=`${d.agendaHoje.length} reserva${d.agendaHoje.length===1?'':'s'}`;document.getElementById('agendaToday').innerHTML=d.agendaHoje.length?d.agendaHoje.map(a=>appointment(a)).join(''):'<div class="empty">No hay agendamientos para este día.</div>';document.getElementById('next7').innerHTML=d.proximos7Dias.length?d.proximos7Dias.map(a=>appointment(a,true)).join(''):'<div class="empty">No hay próximos agendamientos.</div>';document.getElementById('nextCard').innerHTML=d.resumo.proxima?appointment(d.resumo.proxima):'<div class="empty">No hay más citas.</div>';document.getElementById('postSummary').innerHTML=`<div class="next-highlight"><div class="time">${d.posVenda.length}</div><div class="muted">${d.posVenda.length?'contactos pendientes hoy':'Todo al día 🎉'}</div></div>`;document.getElementById('clientsMini').innerHTML=`<div class="next-highlight"><div class="time">${d.clientes.length}</div><div class="muted">clientes registrados</div></div>`;renderSlots(d.slots)}
 function renderSlots(slots){document.getElementById('slots').innerHTML=slots.length?slots.map(s=>`<div class="slot ${s.status==='Ocupado'?'busy':s.status==='Disponible'?'available':'disabled'}"><strong>${esc(s.hora)}</strong><small>${s.status==='Ocupado'?esc(s.cliente)+' · '+esc(s.servico):s.status}</small></div>`).join(''):'<div class="empty">Studio cerrado.</div>'}
 if(authPage())loadData();else setLogin();
