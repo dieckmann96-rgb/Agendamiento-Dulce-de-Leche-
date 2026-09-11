@@ -14,32 +14,71 @@ body{overflow-x:hidden}header{max-width:1180px;margin:auto;padding:20px 20px 10p
 <section id="login"><div class="login-card"><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><p>Panel administrativo</p></div></div><h2>Entrar al panel</h2><input id="token" type="password" autocomplete="current-password" placeholder="Código de acceso"><button class="btn primary" id="loginBtn">Entrar</button><div id="msg"></div></div></section>
 <section id="panel" class="hidden">
 <header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><p>Panel administrativo</p></div></div><button class="btn" id="logout">Cerrar sesión</button></header>
-<nav class="nav" aria-label="Módulos"><button class="btn active" data-mod="agenda">📅 Agenda</button><button class="btn" data-mod="finance">💰 Finanzas</button><button class="btn" data-mod="reports">📊 Informes</button><button class="btn" data-mod="clients">👤 Clientes</button><button class="btn" data-mod="postventa">💬 Pós-venta</button></nav>
+<nav class="nav" aria-label="Módulos">
+<button type="button" class="btn active" id="nav-agenda">📅 Agenda</button>
+<button type="button" class="btn" id="nav-finance">💰 Finanzas</button>
+<button type="button" class="btn" id="nav-reports">📊 Informes</button>
+<button type="button" class="btn" id="nav-clients">👤 Clientes</button>
+<button type="button" class="btn" id="nav-postventa">💬 Pós-venta</button>
+</nav>
 <div id="status" class="status"></div>
 <main class="frame-wrap">
-<iframe id="frame-agenda" class="module-frame active" data-mod="agenda" title="Agenda" src="agenda.html?embedded=1&v=100"></iframe>
-<iframe id="frame-finance" class="module-frame" data-mod="finance" title="Finanzas" src="finance.html?embedded=1&v=100"></iframe>
-<iframe id="frame-reports" class="module-frame" data-mod="reports" title="Informes" src="reports.html?embedded=1&v=100"></iframe>
-<iframe id="frame-clients" class="module-frame" data-mod="clients" title="Clientes" src="clients.html?embedded=1&v=100"></iframe>
-<iframe id="frame-postventa" class="module-frame" data-mod="postventa" title="Pós-venta" src="postventa.html?embedded=1&v=100"></iframe>
+<iframe id="frame-agenda" class="module-frame active" title="Agenda" src="agenda.html?embedded=1&v=110"></iframe>
+<iframe id="frame-finance" class="module-frame" title="Finanzas" src="finance.html?embedded=1&v=110" hidden></iframe>
+<iframe id="frame-reports" class="module-frame" title="Informes" src="reports.html?embedded=1&v=110" hidden></iframe>
+<iframe id="frame-clients" class="module-frame" title="Clientes" src="clients.html?embedded=1&v=110" hidden></iframe>
+<iframe id="frame-postventa" class="module-frame" title="Pós-venta" src="postventa.html?embedded=1&v=110" hidden></iframe>
 </main></section>
 <script>
 'use strict';
 const KEY='dl_admin_token';
 const login=document.getElementById('login'),panel=document.getElementById('panel'),statusEl=document.getElementById('status');
-const frames={agenda:document.getElementById('frame-agenda'),finance:document.getElementById('frame-finance'),reports:document.getElementById('frame-reports'),clients:document.getElementById('frame-clients'),postventa:document.getElementById('frame-postventa')};
+const frames={
+  agenda:document.getElementById('frame-agenda'),
+  finance:document.getElementById('frame-finance'),
+  reports:document.getElementById('frame-reports'),
+  clients:document.getElementById('frame-clients'),
+  postventa:document.getElementById('frame-postventa')
+};
+const navs={
+  agenda:document.getElementById('nav-agenda'),
+  finance:document.getElementById('nav-finance'),
+  reports:document.getElementById('nav-reports'),
+  clients:document.getElementById('nav-clients'),
+  postventa:document.getElementById('nav-postventa')
+};
 function getToken(){try{return localStorage.getItem(KEY)||sessionStorage.getItem(KEY)||''}catch(e){return ''}}
-function saveToken(t){try{localStorage.setItem(KEY,t);sessionStorage.setItem(KEY,t)}catch(e){} document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure'}
-function clearToken(){try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY)}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure'}
-function setActive(mod){if(!frames[mod])mod='agenda';document.querySelectorAll('[data-mod]').forEach(b=>b.classList.toggle('active',b.dataset.mod===mod));Object.entries(frames).forEach(([k,f])=>f.classList.toggle('active',k===mod));statusEl.textContent='';}
+function saveToken(t){try{localStorage.setItem(KEY,t);sessionStorage.setItem(KEY,t)}catch(e){};document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure';}
+function clearToken(){try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY)}catch(e){};document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
+function setActive(mod){
+  if(!frames[mod]) mod='agenda';
+  Object.entries(frames).forEach(([k,f])=>{const active=k===mod; f.hidden=!active; f.classList.toggle('active',active);});
+  Object.entries(navs).forEach(([k,b])=>b.classList.toggle('active',k===mod));
+  try{history.replaceState(null,'','#'+mod)}catch(e){}
+  statusEl.textContent='';
+}
 function sendAuth(frame){const token=getToken();if(!token)return;try{frame.contentWindow.postMessage({type:'dl-auth',token},location.origin)}catch(e){}}
-function showPanel(){login.classList.add('hidden');panel.classList.remove('hidden');setActive('agenda');Object.values(frames).forEach(sendAuth)}
-function doLogin(){const t=document.getElementById('token').value.trim();if(!t){document.getElementById('msg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);showPanel()}
-document.getElementById('loginBtn').onclick=doLogin;document.getElementById('token').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
-document.querySelectorAll('[data-mod]').forEach(b=>b.addEventListener('click',()=>setActive(b.dataset.mod)));
+function showPanel(){login.classList.add('hidden');panel.classList.remove('hidden');const hash=location.hash.replace('#','');setActive(frames[hash]?hash:'agenda');Object.values(frames).forEach(sendAuth);}
+function doLogin(){const t=document.getElementById('token').value.trim();if(!t){document.getElementById('msg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);showPanel();}
+document.getElementById('loginBtn').onclick=doLogin;
+document.getElementById('token').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+Object.entries(navs).forEach(([mod,b])=>b.onclick=()=>setActive(mod));
 Object.values(frames).forEach(frame=>frame.addEventListener('load',()=>sendAuth(frame)));
-window.addEventListener('message',e=>{if(e.origin!==location.origin)return;const d=e.data||{};if(d.type==='dl-nav'&&d.mod){setActive(d.mod);return}if(d.type==='dl-module-height'){const f=Object.values(frames).find(x=>x.contentWindow===e.source);if(f)f.style.height=Math.max(650,Number(d.height||900))+'px';return}if(d.type==='dl-logout'){clearToken();document.getElementById('logout').click();}});
-document.getElementById('logout').onclick=()=>{clearToken();Object.values(frames).forEach(f=>f.contentWindow?.postMessage({type:'dl-logout'},location.origin));panel.classList.add('hidden');login.classList.remove('hidden');document.getElementById('token').value='';setActive('agenda')};
+window.addEventListener('message',e=>{
+  if(e.origin!==location.origin)return;
+  const d=e.data||{};
+  if(d.type==='dl-nav'&&frames[d.mod]){setActive(d.mod);return}
+  if(d.type==='dl-module-height'){
+    const f=Object.values(frames).find(x=>x.contentWindow===e.source);
+    if(f)f.style.height=Math.max(650,Number(d.height||900))+'px';
+    return;
+  }
+  if(d.type==='dl-logout') logout();
+});
+function logout(){clearToken();Object.values(frames).forEach(f=>{try{f.contentWindow.postMessage({type:'dl-logout'},location.origin)}catch(e){}});panel.classList.add('hidden');login.classList.remove('hidden');document.getElementById('token').value='';setActive('agenda');}
+document.getElementById('logout').onclick=logout;
+window.addEventListener('hashchange',()=>{if(!panel.classList.contains('hidden')){const mod=location.hash.replace('#','');if(frames[mod])setActive(mod)}});
 if(getToken())showPanel();
+
 </script>
 </body></html>
