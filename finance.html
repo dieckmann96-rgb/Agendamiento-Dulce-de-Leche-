@@ -1,0 +1,168 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dulce de Leche · Finanzas</title><link rel="icon" href="logo.jpg"><style>
+:root{
+ --bg:#fbf4e5;--card:#fffaf1;--white:#fff;--brown:#4f2b1c;--brown2:#7c5d4d;
+ --gold:#c77a24;--line:#dfc39a;--green:#2c9860;--red:#b94c3d;--soft:#f7ead7;
+ --shadow:0 12px 30px rgba(79,43,28,.09)
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fffdf8 0%,#fbf4e5 55%,#f7eddc 100%);font-family:Arial,Helvetica,sans-serif;color:var(--brown)}
+a{text-decoration:none;color:inherit}.hidden{display:none!important}
+.wrap{width:min(100% - 24px,1180px);margin:auto;padding:18px 0 42px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);object-fit:cover}
+.brand h1{font:700 28px Georgia,serif;margin:0}.brand small{color:var(--brown2)}
+h1,h2,h3{font-family:Georgia,serif}
+.card,.login{background:rgba(255,250,241,.97);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.card{padding:20px;margin-bottom:16px}.login{max-width:470px;margin:70px auto;padding:30px}
+.login h2{font-size:26px;margin:22px 0 8px}.login p,.muted{color:var(--brown2);line-height:1.5}
+.label{display:block;font-weight:800;font-size:13px;margin:16px 0 7px}
+input,select{width:100%;height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 13px;font-size:15px;color:var(--brown);outline:0}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(199,122,36,.12)}
+button,.btn{border:0;border-radius:12px;padding:11px 15px;background:var(--brown);color:#fff;font-weight:800;cursor:pointer;font-size:14px}
+.primary{background:linear-gradient(135deg,#d18a32,#ad631d)}.btn-light{background:#fff;color:var(--brown);border:1px solid var(--line)}
+.btn-wa{background:var(--green)}.btn-red{background:var(--red)}.wide{width:100%;margin-top:18px}
+.module-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:4px 2px 10px;margin-bottom:16px}
+.nav-link{display:flex;align-items:center;justify-content:center;text-align:center;min-height:42px;white-space:nowrap;padding:10px 12px;border:1px solid var(--line);background:#fff8ed;border-radius:999px;font-weight:800;font-size:13px}.nav-link.active{background:var(--brown);color:#fff}
+.page-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:14px}.page-head h2{font-size:30px;margin:0 0 5px}.page-head p{margin:0}
+.filters{display:flex;gap:9px;align-items:end;flex-wrap:wrap}.filter{min-width:170px}.filter label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.kpi{padding:18px}.kpi span{display:block;color:var(--brown2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.kpi strong{display:block;font-size:31px;margin-top:7px}.kpi small{display:block;color:var(--brown2);margin-top:4px}.kpi.alert{border-color:#e3b2a8}.kpi.alert strong{color:var(--red)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.section-head h3{margin:0;font-size:24px}.section-head p{margin:4px 0 0}
+.list{display:grid;gap:10px}.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.item-top{display:flex;justify-content:space-between;gap:10px;align-items:start;font-weight:800;font-size:16px}
+.pill{display:inline-block;background:var(--soft);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800;white-space:nowrap}.pill.ok{background:#e7f4ea;color:#267147}.pill.busy{background:#fae7e2;color:#9c3e30}
+.small{font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.actions .btn{font-size:12px;padding:9px 11px}.empty{padding:18px 4px;color:var(--brown2)}
+.agenda-grid{display:grid;grid-template-columns:1.55fr .85fr;gap:16px}.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.slot{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.slot strong{display:block;font-size:15px}.slot small{display:block;margin-top:4px;color:var(--brown2);line-height:1.3}.slot.available{background:#f5fbf6;border-color:#b9d9c2}.slot.busy{background:#fff0ed;border-color:#e2b2a9}.slot.disabled{opacity:.65;background:#f6f3ed}
+.next-highlight{background:linear-gradient(135deg,#fff8eb,#f9eedb);border:1px solid var(--line);border-radius:16px;padding:16px}.next-highlight .time{font-size:34px;font-weight:900}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px 10px;border-bottom:1px solid #eadcc8;font-size:13px}.table th{font-size:11px;text-transform:uppercase;color:var(--brown2);letter-spacing:.07em}
+.expense-form{display:grid;grid-template-columns:1fr 1fr 1.5fr 1fr auto;gap:9px;align-items:end}.expense-form label{display:block;font-size:11px;font-weight:800;margin-bottom:5px}
+.expense-row{display:grid;grid-template-columns:100px 1fr 140px 1fr;gap:10px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.expense-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.expense-actions button{font-size:11px;padding:8px 10px}
+.progress{height:12px;background:#efe1cb;border-radius:999px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,#d28b35,#a85d1a);border-radius:inherit}
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.compare-card{padding:18px}.compare-card span{display:block;color:var(--brown2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.compare-card strong{display:block;font-size:26px;margin-top:7px}.positive{color:var(--green)}.negative{color:var(--red)}
+.chart-card{padding:18px}.chart-card h3{margin:0;font-size:23px}.chart-sub{color:var(--brown2);font-size:12px;margin:4px 0 14px}
+.bar-chart{display:flex;align-items:flex-end;gap:7px;height:280px;padding:10px 0 0;border-bottom:1px solid var(--line);overflow-x:auto}.bar-group{min-width:28px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}.bar{width:100%;max-width:30px;background:linear-gradient(180deg,#d5943f,#704025);border-radius:7px 7px 2px 2px;min-height:2px}.bar-label{font-size:9px;color:var(--brown2)}.bar-value{font-size:9px;font-weight:800;white-space:nowrap;transform:rotate(-65deg);transform-origin:center bottom;margin-bottom:3px}
+.chart-meta{display:flex;justify-content:space-between;margin-top:8px;color:var(--brown2);font-size:11px}
+.search-row{display:flex;gap:8px;margin-bottom:12px}.search-row input{flex:1}.client-row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #eadcc8}.client-name{font-weight:800}
+.footer{text-align:center;color:var(--brown2);font-size:12px;margin-top:22px}
+@media(max-width:900px){.agenda-grid{grid-template-columns:1fr}.kpi-grid,.compare-grid{grid-template-columns:1fr 1fr}.expense-form{grid-template-columns:1fr 1fr}.expense-row{grid-template-columns:1fr 1fr}.client-row{grid-template-columns:1.4fr 1fr 1fr}.client-row .client-action{grid-column:1/-1}}
+@media(max-width:700px){.module-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nav-link{min-height:46px;font-size:13px}.wrap{width:min(100% - 16px,1180px);padding-top:12px}.brand h1{font-size:23px}.brand img{width:50px;height:50px}.page-head h2{font-size:27px}.kpi-grid,.compare-grid{grid-template-columns:1fr}.kpi strong{font-size:27px}.filters,.filter{width:100%}.filters input,.filters select{width:100%}.timeline{grid-template-columns:repeat(2,1fr)}.expense-form{grid-template-columns:1fr}.expense-row{grid-template-columns:1fr}.module-nav{margin-right:0}.bar-chart{height:240px}}
+
+/* V8.2 — mobile-first refinements */
+@media(max-width:700px){
+  body{font-size:14px}
+  header{align-items:flex-start;gap:10px}
+  header .btn{flex:0 0 auto;padding:9px 11px;font-size:12px}
+  .module-nav{grid-template-columns:repeat(2,minmax(0,1fr));position:sticky;top:0;z-index:20;background:rgba(255,252,246,.96);backdrop-filter:blur(8px);padding:8px 0 10px;margin:0 -2px 14px}
+  .module-nav .nav-link:last-child{grid-column:1/-1}
+  .nav-link{min-height:48px;border-radius:14px;padding:10px 8px}
+  .page-head{display:block}
+  .page-head .filters{margin-top:12px}
+  .agenda-grid{display:block}
+  .agenda-grid>aside{display:block}
+  .card{padding:15px;border-radius:16px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .kpi{padding:14px}.kpi strong{font-size:25px}
+  .timeline{grid-template-columns:1fr 1fr;gap:7px}
+  .slot{padding:9px}.slot strong{font-size:14px}
+  .item-top{font-size:15px}
+  .actions{gap:6px}.actions .btn{flex:1 1 auto;text-align:center}
+  .expense-form,.expense-row,.client-row{grid-template-columns:1fr!important}
+  .compare-grid{grid-template-columns:1fr}
+  .chart-card{overflow:hidden}
+  .bar-chart{height:230px;gap:5px;padding-right:8px}
+  .bar-group{min-width:24px}.bar{max-width:24px}
+  .bar-value{font-size:8px}
+  .table-wrap{border:1px solid var(--line);border-radius:12px}
+  .table{min-width:620px}
+}
+</style>
+<style>
+body.embedded-mode{padding-top:0}
+body.embedded-mode > .wrap > .login{display:none!important}
+body.embedded-mode > .wrap > main#app > header,
+body.embedded-mode > .wrap > main#app > nav.module-nav{display:none!important}
+body.embedded-mode > .wrap{width:100%;padding-top:0}
+body.embedded-mode > .wrap > main#app{display:block!important}
+body.embedded-mode .footer{display:none!important}
+@media(max-width:700px){body.embedded-mode .page-head h2{font-size:25px}body.embedded-mode .card{border-radius:14px}}
+</style>
+</head><body><script>if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded-mode');</script><div class="wrap"><section id="login" class="login">
+<div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Beauty Studio · Administración</small></div></div>
+<h2>Panel administrativo</h2><p>Accede a los módulos del Studio desde un solo lugar.</p>
+<label class="label" for="token">Código de acceso</label><input id="token" type="password" autocomplete="current-password" placeholder="Introduce tu código">
+<button id="loginBtn" class="btn primary wide">Entrar al panel</button><div id="loginMsg"></div>
+</section><main id="app" class="hidden"><header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><small>Panel administrativo</small></div></div><button id="logoutBtn" class="btn btn-light">Cerrar sesión</button></header><nav class="module-nav">
+<a class="nav-link" data-module="agenda" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'agenda'},location.origin);return false;} return true;">📅 Agenda</a>
+<a class="nav-link" data-module="financeiro" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'finance'},location.origin);return false;} return true;">💰 Finanzas</a>
+<a class="nav-link" data-module="relatorios" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'reports'},location.origin);return false;} return true;">📊 Informes</a>
+<a class="nav-link" data-module="clientes" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'clients'},location.origin);return false;} return true;">👤 Clientes</a>
+<a class="nav-link" data-module="posvenda" href="#" onclick="if(window.parent!==window){window.parent.postMessage({type:'dl-nav',mod:'postventa'},location.origin);return false;} return true;">💬 Pós-venta</a>
+</nav>
+<div class="page-head"><div><h2>Finanzas</h2><p id="todayLabel" class="muted small"></p></div><div class="filters"><div class="filter"><label>Mes consultado</label><input id="date" type="date"></div><button id="refresh" class="btn primary">Actualizar</button></div></div><div id="pageMsg"></div>
+<section class="kpi-grid"><div class="card kpi"><span>Facturación del mes</span><strong id="fMonth">Gs 0</strong><small>Ingresos registrados</small></div><div class="card kpi"><span>Despesas del mes</span><strong id="expenseMonth">Gs 0</strong><small>Fijas + variables</small></div><div class="card kpi"><span>Lucro líquido</span><strong id="profitMonth">Gs 0</strong><small>Faturación − despesas</small></div></section>
+<section class="kpi-grid"><div class="card kpi"><span>Margen neto</span><strong id="marginMonth">0%</strong><small>Lucro ÷ faturación</small></div><div class="card kpi"><span>Ticket medio</span><strong id="ticketMonth">Gs 0</strong><small>Faturación ÷ atendimientos</small></div><div class="card kpi"><span>Costo fijo mensual</span><strong>Gs 6.600.000</strong><small>Configurado actualmente</small></div></section>
+<section class="card"><div class="section-head"><div><h3>🎯 Punto de equilibrio</h3><p class="muted small">Cuánto falta para cubrir los costos fijos.</p></div></div><div style="display:grid;gap:10px"><div style="display:flex;justify-content:space-between"><b>Faturación actual</b><b id="breakRevenue">Gs 0</b></div><div class="progress"><span id="breakProgress" style="width:0%"></span></div><div id="breakNote" class="notice"></div></div></section>
+<section class="card"><div class="section-head"><div><h3>🧾 Registrar gasto</h3><p class="muted small">Las fijas se generan automáticamente. Las compras se registran cuando ocurren.</p></div></div><div class="expense-form"><div><label>Fecha</label><input id="expenseDate" type="date"></div><div><label>Categoría</label><select id="expenseCategory"><option>Materiais para micropigmentación</option><option>Materiais para cílios</option><option>Produtos para unhas</option><option>Produtos para sobrancelhas</option><option>Produtos de depilación</option><option>Publicidad</option><option>Equipamentos</option><option>Manutenção</option><option>Outros</option></select></div><div><label>Descripción</label><input id="expenseDescription" placeholder="Ej.: compra de pigmentos"></div><div><label>Valor (Gs)</label><input id="expenseValue" inputmode="numeric" placeholder="0"></div><button id="addExpense" class="btn primary">+ Registrar</button></div><div id="expenseMsg"></div></section>
+<section class="card"><div class="section-head"><div><h3>🧾 Gastos del mes</h3><p class="muted small">Las fijas no se pueden editar ni excluir.</p></div></div><div id="expenseList" class="list"></div></section>
+<section class="card"><div class="section-head"><div><h3>🏆 Rendimiento por servicio</h3><p class="muted small">Atendimientos, facturación y pendientes de valor.</p></div></div><div id="financeTable" class="table-wrap"></div></section>
+<footer class="footer">Dulce de Leche Beauty Studio</footer></main></div><script>
+const API='/api/agenda';
+const SERVICES=['Micro pigmentación de Labios','Micro pigmentación de Cejas','Neutralización de Labios','Extensión de Pestañas','Depilación','Laminado de Cejas','Lifting de Pestañas','Diseño de Cejas','Diseño de Cejas con Henna','Diseño de Cejas con Tinte','Servicio de Manicura','Servicio de Pedicure'];
+let lastData=null;
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));}
+function todayISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}
+function formatGs(v){return 'Gs '+Math.round(Number(v||0)).toLocaleString('es-PY');}
+function wa(url,label='WhatsApp'){const u=String(url||'');return /^https:\/\/wa\.me\//i.test(u)?`<a class="btn btn-wa" href="${esc(u)}" target="_blank" rel="noopener">📱 ${label}</a>`:'';}
+function cal(url){return url?`<a class="btn btn-light" href="${esc(url)}" target="_blank" rel="noopener">🗓️ Calendar</a>`:'';}
+async function apiPost(data){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});const t=await r.text();let j;try{j=JSON.parse(t)}catch(e){throw new Error('La API devolvió una respuesta no válida.')};if(!r.ok)throw new Error(j.mensagem||'Error de conexión');return j;}
+function setupNav(active){document.querySelectorAll('.nav-link').forEach(a=>a.classList.toggle('active',a.dataset.module===active));}
+function getCookieToken(){const m=document.cookie.match(/(?:^|;\s*)dl_admin_token=([^;]+)/);return m?decodeURIComponent(m[1]):'';}
+function getToken(){try{return localStorage.getItem('dl_admin_token')||sessionStorage.getItem('dl_admin_token')||getCookieToken()||'';}catch(e){return getCookieToken()||'';}}
+function saveToken(t){try{localStorage.setItem('dl_admin_token',t);sessionStorage.setItem('dl_admin_token',t);}catch(e){} document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure';}
+function clearToken(){try{localStorage.removeItem('dl_admin_token');sessionStorage.removeItem('dl_admin_token');}catch(e){} document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
+function logout(){clearToken();if(EMBEDDED){try{window.parent.postMessage({type:'dl-logout'},location.origin);}catch(e){} return;}location.href='admin.html?v=83';}
+function authPage(){const token=getToken();if(!token){const here=location.pathname.split('/').pop()||'admin.html';if(here!=='admin.html'){location.href='admin.html?v=83&return='+encodeURIComponent(here);return false;}document.getElementById('login')?.classList.remove('hidden');document.getElementById('app')?.classList.add('hidden');return false;}document.getElementById('logoutBtn')?.addEventListener('click',logout);return true;}
+function goHome(){location.href='admin.html';}
+function appointment(a,withDate=false){
+ const value=Number(a.valor||0);
+ return `<div class="item"><div class="item-top"><span>${withDate?esc(a.data)+' · ':''}${esc(a.hora)} · ${esc(a.cliente)}</span><span class="pill ${String(a.status).toLowerCase()==='confirmado'?'ok':''}">${esc(a.status||'Confirmado')}</span></div><div class="muted small">${esc(a.servico)} · ${esc(a.duracao)} min · termina ${esc(a.fim)}</div><div class="muted small">${(String(a.telefone||'').trim() && !String(a.telefone).includes('#ERROR'))?esc(a.telefone):'Telefone não informado'}${a.tipoDocumento && !String(a.documento||'').includes('#ERROR')?' · '+esc(a.tipoDocumento)+': '+esc(a.documento):''}</div><div class="muted small"><b>Valor:</b> ${value?formatGs(value):'Pendiente de informar'}</div><div class="actions">${wa(a.whatsappUrl)}${cal(a.calendarUrl)}<button class="btn btn-light" onclick="editarValor('${esc(a.id)}',${value||0})">💰 ${value?'Editar valor':'Informar valor'}</button></div></div>`;
+}
+async function editarValor(id,atual){
+ const token=getToken();if(!token)return;
+ const appt=(lastData?.agendaHoje||[]).concat(lastData?.proximos7Dias||[]).find(a=>String(a.id)===String(id));const serv=appt?.servico||'';let msg='Informe el valor cobrado en Gs:';
+ if(serv==='Depilación')msg=`Depilación:\n\nAxilas: 30.000\nBozo: 30.000\nMedia Piernas: 85.000\nPierna completa: 150.000`;
+ else if(serv==='Extensión de Pestañas')msg='Extensión de Pestañas — valor cobrado (desde Gs 200.000):';
+ else if(serv==='Servicio de Manicura')msg=`Manicura:\n\nTradicional: 70.000\nSemipermanente: 90.000`;
+ else if(serv==='Servicio de Pedicure')msg=`Pedicure:\n\nTradicional: 80.000\nSemipermanente: 100.000`;
+ const input=prompt(msg,atual?String(Math.round(atual)):'');if(input===null)return;const valor=Number(String(input).replace(/[^0-9]/g,''));if(!isFinite(valor)||valor<0)return alert('Valor inválido.');
+ const r=await apiPost({acao:'admin_valor',id,valor,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();
+}
+async function marcarContactado(id){const token=getToken();if(!token||!confirm('¿Marcar este contacto como realizado?'))return;const r=await apiPost({acao:'posvenda_marcar',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();}
+function setLogin(){document.getElementById('loginBtn').onclick=()=>{const t=document.getElementById('token').value.trim();if(!t){document.getElementById('loginMsg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);const ret=new URLSearchParams(location.search).get('return');if(ret&&/^(finance|reports|clients|postventa)\.html$/.test(ret)){location.href=ret+'?v=83';return;}loadData();};}
+
+const login=document.getElementById('login'),app=document.getElementById('app'),dateEl=document.getElementById('date');dateEl.value=todayISO();document.getElementById('expenseDate').value=todayISO();setupNav('financeiro');setLogin();document.getElementById('refresh').onclick=loadData;dateEl.onchange=loadData;
+async function loadData(){const token=getToken();if(!token){login.classList.remove('hidden');app.classList.add('hidden');return}try{const d=await apiPost({acao:'admin',token,data:dateEl.value||todayISO()});if(d.status!=='ok'){const msg=d.mensagem||'No autorizado';if(String(msg).toLowerCase().includes('no autorizado')){clearToken();login.classList.remove('hidden');app.classList.add('hidden');document.getElementById('loginMsg').innerHTML='<div class="error">'+esc(msg)+'</div>';return}throw new Error(msg)}lastData=d;render(d);login.classList.add('hidden');app.classList.remove('hidden')}catch(e){login.classList.add('hidden');app.classList.remove('hidden');const box=document.getElementById('pageMsg');if(box)box.innerHTML='<div class="error">'+esc(e.message)+'</div>';else alert(e.message)}}
+function render(d){const r=d.resumo||{};document.getElementById('todayLabel').textContent='Mes consultado: '+d.hoje;document.getElementById('fMonth').textContent=formatGs(r.faturamentoMes);document.getElementById('expenseMonth').textContent=formatGs(r.despesasMes);document.getElementById('profitMonth').textContent=formatGs(r.lucroMes);document.getElementById('profitMonth').className=r.lucroMes>=0?'positive':'negative';document.getElementById('marginMonth').textContent=Number(r.margemMes||0).toFixed(1)+'%';const n=Number(r.atendimientosMes||r.atendimentosMes||0);document.getElementById('ticketMonth').textContent=formatGs(n?Number(r.faturamentoMes||0)/n:0);document.getElementById('breakRevenue').textContent=formatGs(r.faturamentoMes);const pct=Math.max(0,Math.min(100,(Number(r.faturamentoMes||0)/6600000)*100));document.getElementById('breakProgress').style.width=pct+'%';document.getElementById('breakNote').textContent=Number(r.faturamentoMes||0)>=6600000?'Ponto de equilibrio alcanzado.':'Faltan '+formatGs(6600000-Number(r.faturamentoMes||0))+' para cubrir los costos fijos.';renderExpenses(d.despesasMes||[]);renderFinance(r.faturamentoMesPorServico||[])}
+function renderExpenses(rows){const el=document.getElementById('expenseList');if(!rows.length){el.innerHTML='<div class="empty">No hay gastos registrados.</div>';return}el.innerHTML=rows.map(d=>{const editable=d.tipo==='Despesa variable';return `<div class="expense-row"><div><b>${esc(d.data)}</b></div><div><b>${esc(d.categoria)}</b><div class="muted small">${esc(d.descricao||'')}</div></div><div><strong>${formatGs(d.valor)}</strong><div class="muted small">${esc(d.tipo)}</div></div><div class="expense-actions">${editable?`<button class="btn btn-light" onclick="editarDespesa('${esc(d.id)}',${Number(d.valor)||0},'${esc(d.categoria)}','${esc(d.descricao||'')}')">✏️ Editar</button><button class="btn btn-red" onclick="excluirDespesa('${esc(d.id)}')">🗑️ Excluir</button>`:'<span class="muted small">Fija automática</span>'}</div></div>`}).join('')}
+async function editarDespesa(id,valorAtual,categoria,descricao){const token=getToken();const v=prompt('Valor de la despesa en Gs:',String(Math.round(valorAtual||0)));if(v===null)return;const valor=Number(String(v).replace(/[^0-9]/g,''));if(!isFinite(valor)||valor<=0)return alert('Valor inválido.');const d=prompt('Descripción:',descricao||categoria||'');if(d===null)return;const r=await apiPost({acao:'editar_despesa',id,token,valor,categoria,descricao:d});if(r.status!=='ok')return alert(r.mensagem||'No se pudo actualizar');await loadData();}
+async function excluirDespesa(id){const token=getToken();if(!confirm('¿Excluir esta despesa? Esta acción no se puede deshacer.'))return;const r=await apiPost({acao:'excluir_despesa',id,token});if(r.status!=='ok')return alert(r.mensagem||'No se pudo excluir');await loadData();}
+function renderFinance(rows){const el=document.getElementById('financeTable');if(!rows.length){el.innerHTML='<div class="empty">No hay datos del mes.</div>';return}el.innerHTML=`<table class="table"><thead><tr><th>Servicio</th><th>Atenciones</th><th>Facturación</th><th>Pendientes</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.servico)}</td><td>${r.atendimientos}</td><td>${r.faturamento?formatGs(r.faturamento):'Gs 0'}</td><td>${r.pendenteValor||0}</td></tr>`).join('')}</tbody></table>`}
+document.getElementById('addExpense').onclick=async()=>{const token=getToken();const data=document.getElementById('expenseDate').value;const categoria=document.getElementById('expenseCategory').value;const descricao=document.getElementById('expenseDescription').value.trim()||categoria;const valor=document.getElementById('expenseValue').value;try{const r=await apiPost({acao:'registrar_despesa',token,data,categoria,descricao,valor,recorrente:false});if(r.status!=='ok')throw new Error(r.mensagem);document.getElementById('expenseDescription').value='';document.getElementById('expenseValue').value='';document.getElementById('expenseMsg').innerHTML='<div class="notice">Gasto registrado correctamente.</div>';await loadData();setTimeout(()=>document.getElementById('expenseMsg').innerHTML='',2000)}catch(e){document.getElementById('expenseMsg').innerHTML='<div class="error">'+esc(e.message)+'</div>'}};
+const EMBEDDED = new URLSearchParams(location.search).get('embedded') === '1';
+function reportHeight(){try{window.parent.postMessage({type:'dl-module-height',height:Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},location.origin);}catch(e){}}
+if(EMBEDDED){
+  document.getElementById('login')?.classList.add('hidden');
+  document.getElementById('app')?.classList.remove('hidden');
+  window.addEventListener('message',function(ev){
+    if(ev.origin!==location.origin) return;
+    if(ev.data && ev.data.type==='dl-auth' && ev.data.token){
+      saveToken(ev.data.token); loadData().then(reportHeight).catch(reportHeight);
+    }
+    if(ev.data && ev.data.type==='dl-logout'){clearToken();window.parent.postMessage({type:'dl-logout'},location.origin);}
+  });
+  window.addEventListener('load',()=>setTimeout(reportHeight,100));
+}else{
+  if(authPage())loadData();else setLogin();
+}
+
+if(EMBEDDED){try{new MutationObserver(reportHeight).observe(document.body,{subtree:true,childList:true,attributes:true});window.addEventListener('resize',reportHeight);}catch(e){}}
+</script></body></html>

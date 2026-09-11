@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dulce de Leche — Panel</title>
+<style>
+:root{--brown:#4b2718;--gold:#c07a2b;--cream:#fbf5e9;--line:#e5c18f;--white:#fffaf2}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--cream);color:var(--brown);font-family:Arial,sans-serif}
+body{overflow-x:hidden}header{max-width:1180px;margin:auto;padding:20px 20px 10px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:14px}.brand img{width:62px;height:62px;object-fit:contain;border-radius:50%}.brand h1{font-family:Georgia,serif;margin:0;font-size:30px}.brand p{margin:3px 0 0;color:#6b4938}.btn{border:1px solid var(--line);background:var(--white);color:var(--brown);border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer}.btn.primary{background:var(--brown);color:#fff}.nav{max-width:1180px;margin:6px auto 14px;padding:0 20px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.nav button{width:100%;min-height:44px}.nav button.active{background:var(--brown);color:#fff}.frame-wrap{max-width:1180px;margin:auto;padding:0 20px 30px}.module-frame{width:100%;height:800px;border:0;display:none;background:transparent;vertical-align:top}.module-frame.active{display:block}#login{min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 12px 30px #4b27181a}.login-card .brand img{width:64px;height:64px}.login-card h2{font-family:Georgia,serif;margin:22px 0 10px}.login-card input{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;margin:8px 0 14px;font-size:16px}.error{color:#a33;margin-top:10px}.hidden{display:none!important}.status{max-width:1180px;margin:0 auto 10px;padding:0 20px;color:#765646;font-size:13px}
+@media(max-width:700px){header{padding:12px 10px 8px}.brand{gap:9px}.brand img{width:48px;height:48px}.brand h1{font-size:21px}.brand p{font-size:12px}.nav{padding:0 8px;grid-template-columns:repeat(2,1fr);gap:6px}.nav button{min-height:44px;padding:9px 6px;font-size:13px}.nav button:last-child{grid-column:1/-1}.frame-wrap{padding:0 4px 18px}.module-frame{height:900px}.status{padding:0 10px}}
+</style>
+</head>
+<body>
+<section id="login"><div class="login-card"><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><p>Panel administrativo</p></div></div><h2>Entrar al panel</h2><input id="token" type="password" autocomplete="current-password" placeholder="Código de acceso"><button class="btn primary" id="loginBtn">Entrar</button><div id="msg"></div></div></section>
+<section id="panel" class="hidden">
+<header><div class="brand"><img src="logo.jpg" alt="Dulce de Leche"><div><h1>Dulce de Leche</h1><p>Panel administrativo</p></div></div><button class="btn" id="logout">Cerrar sesión</button></header>
+<nav class="nav" aria-label="Módulos">
+<button type="button" class="btn active" id="nav-agenda">📅 Agenda</button>
+<button type="button" class="btn" id="nav-finance">💰 Finanzas</button>
+<button type="button" class="btn" id="nav-reports">📊 Informes</button>
+<button type="button" class="btn" id="nav-clients">👤 Clientes</button>
+<button type="button" class="btn" id="nav-postventa">💬 Pós-venta</button>
+</nav>
+<div id="status" class="status"></div>
+<main class="frame-wrap">
+<iframe id="frame-agenda" class="module-frame active" title="Agenda" src="agenda.html?embedded=1&v=110"></iframe>
+<iframe id="frame-finance" class="module-frame" title="Finanzas" src="finance.html?embedded=1&v=110" hidden></iframe>
+<iframe id="frame-reports" class="module-frame" title="Informes" src="reports.html?embedded=1&v=110" hidden></iframe>
+<iframe id="frame-clients" class="module-frame" title="Clientes" src="clients.html?embedded=1&v=110" hidden></iframe>
+<iframe id="frame-postventa" class="module-frame" title="Pós-venta" src="postventa.html?embedded=1&v=110" hidden></iframe>
+</main></section>
+<script>
+'use strict';
+const KEY='dl_admin_token';
+const login=document.getElementById('login'),panel=document.getElementById('panel'),statusEl=document.getElementById('status');
+const frames={
+  agenda:document.getElementById('frame-agenda'),
+  finance:document.getElementById('frame-finance'),
+  reports:document.getElementById('frame-reports'),
+  clients:document.getElementById('frame-clients'),
+  postventa:document.getElementById('frame-postventa')
+};
+const navs={
+  agenda:document.getElementById('nav-agenda'),
+  finance:document.getElementById('nav-finance'),
+  reports:document.getElementById('nav-reports'),
+  clients:document.getElementById('nav-clients'),
+  postventa:document.getElementById('nav-postventa')
+};
+function getToken(){try{return localStorage.getItem(KEY)||sessionStorage.getItem(KEY)||''}catch(e){return ''}}
+function saveToken(t){try{localStorage.setItem(KEY,t);sessionStorage.setItem(KEY,t)}catch(e){};document.cookie='dl_admin_token='+encodeURIComponent(t)+'; Path=/; Max-Age=86400; SameSite=Lax; Secure';}
+function clearToken(){try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY)}catch(e){};document.cookie='dl_admin_token=; Path=/; Max-Age=0; SameSite=Lax; Secure';}
+function setActive(mod){
+  if(!frames[mod]) mod='agenda';
+  Object.entries(frames).forEach(([k,f])=>{const active=k===mod; f.hidden=!active; f.classList.toggle('active',active);});
+  Object.entries(navs).forEach(([k,b])=>b.classList.toggle('active',k===mod));
+  try{history.replaceState(null,'','#'+mod)}catch(e){}
+  statusEl.textContent='';
+}
+function sendAuth(frame){const token=getToken();if(!token)return;try{frame.contentWindow.postMessage({type:'dl-auth',token},location.origin)}catch(e){}}
+function showPanel(){login.classList.add('hidden');panel.classList.remove('hidden');const hash=location.hash.replace('#','');setActive(frames[hash]?hash:'agenda');Object.values(frames).forEach(sendAuth);}
+function doLogin(){const t=document.getElementById('token').value.trim();if(!t){document.getElementById('msg').innerHTML='<div class="error">Introduce el código de acceso.</div>';return}saveToken(t);showPanel();}
+document.getElementById('loginBtn').onclick=doLogin;
+document.getElementById('token').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+Object.entries(navs).forEach(([mod,b])=>b.onclick=()=>setActive(mod));
+Object.values(frames).forEach(frame=>frame.addEventListener('load',()=>sendAuth(frame)));
+window.addEventListener('message',e=>{
+  if(e.origin!==location.origin)return;
+  const d=e.data||{};
+  if(d.type==='dl-nav'&&frames[d.mod]){setActive(d.mod);return}
+  if(d.type==='dl-module-height'){
+    const f=Object.values(frames).find(x=>x.contentWindow===e.source);
+    if(f)f.style.height=Math.max(650,Number(d.height||900))+'px';
+    return;
+  }
+  if(d.type==='dl-logout') logout();
+});
+function logout(){clearToken();Object.values(frames).forEach(f=>{try{f.contentWindow.postMessage({type:'dl-logout'},location.origin)}catch(e){}});panel.classList.add('hidden');login.classList.remove('hidden');document.getElementById('token').value='';setActive('agenda');}
+document.getElementById('logout').onclick=logout;
+window.addEventListener('hashchange',()=>{if(!panel.classList.contains('hidden')){const mod=location.hash.replace('#','');if(frames[mod])setActive(mod)}});
+if(getToken())showPanel();
+
+</script>
+</body></html>
