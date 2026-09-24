@@ -71,7 +71,7 @@ function showServices(){
       ['Diseño de Cejas',40000,30,20,false],
       ['Diseño de Cejas con Henna',50000,30,20,false],
       ['Diseño de Cejas con Tinte',70000,40,20,false],
-      ['Extensión de Pestañas',200000,120,14,true,'Variable'],
+      ['Extensión de Pestañas',180000,120,14,true,'Niveles', [['Leve',180000],['Medio',250000],['Lleno',280000]]],
       ['Manutención de Pestañas',120000,60,0,false,'Variable'],
       ['Extensiones en red',150000,40,0,false]
     ],
@@ -91,7 +91,7 @@ function showServices(){
   let html='<div class="empty">Lectura de la configuración actual del V17. En esta etapa no se modifica ningún servicio.</div>';
   for(const [cat,items] of Object.entries(categorias)){
     html+=`<div class="section-title"><h2>${cat}</h2></div><div class="list">`;
-    html+=items.map(x=>`<div class="item"><div class="item-main"><b>${x[0]}</b><small>${x[5]?x[5]+' · ':''}${x[2]} min · Posventa: ${x[3]||'—'} días${x[4]?' · ⭐ Destacado':''}</small></div><strong class="money">${x[5]==='Variable'?'Desde ':''}Gs ${money(x[1])}</strong></div>`).join('');
+    html+=items.map(x=>{const niveles=x[6]; const precio=niveles?('<div style="margin-top:8px;display:grid;gap:6px">'+niveles.map(n=>`<div style="display:flex;justify-content:space-between;gap:12px"><span>${n[0]}</span><strong>Gs ${money(n[1])}</strong></div>`).join('')+'</div>'):''; const etiqueta=x[5]&&x[5]!=='Niveles'?x[5]+' · ':''; const principal=niveles?'':`<strong class="money">Gs ${money(x[1])}</strong>`; return `<div class="item"><div class="item-main"><b>${x[0]}</b><small>${etiqueta}${x[2]} min · Posventa: ${x[3]||'—'} días${x[4]?' · ⭐ Destacado':''}</small>${precio}</div>${principal}</div>`}).join('');
     html+='</div>';
   }
   document.getElementById('detailTitle').textContent='Servicios';
