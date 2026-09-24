@@ -73,15 +73,22 @@ function showReports(){
     <div class="stat"><small>Atenciones mes</small><strong>${Number(r.atendimentosMes)||0}</strong></div>
     <div class="stat"><small>Margen mes</small><strong>${Number(r.margemMes||0).toLocaleString('es-PY',{maximumFractionDigits:1})}%</strong></div>
   </div>`;
+  const tendencia=Array.isArray(r.tendenciaMes)?r.tendenciaMes:[];
+  const mejor=r.mejorDiaSemana&&typeof r.mejorDiaSemana==='object'?r.mejorDiaSemana:null;
+  const totalTendencia=tendencia.reduce((s,x)=>s+(Number(x.facturacion)||0),0);
+  const atendTendencia=tendencia.reduce((s,x)=>s+(Number(x.atendimientos)||0),0);
+  const tendenciaUltimos=tendencia.slice(-7).reverse();
+  const tendenciaTexto=tendencia.length?`Gs ${money(totalTendencia)} · ${atendTendencia} atenciones`: 'Sin datos';
   const comparacion=`<div class="list" style="margin-top:10px">
     <div class="item"><div class="item-main"><b>Mes anterior</b><small>Ingresos · ${Number(r.atendimientosMesAnterior)||0} atenciones</small></div><strong>Gs ${money(r.faturamentoMesAnterior)}</strong></div>
-    <div class="item"><div class="item-main"><b>Tendencia del mes</b><small>Comparación con el mes anterior</small></div><strong>${r.tendenciaMes||'—'}</strong></div>
-    <div class="item"><div class="item-main"><b>Mejor día de la semana</b><small>Día con más movimiento</small></div><strong>${r.mejorDiaSemana||'—'}</strong></div>
+    <div class="item"><div class="item-main"><b>Tendencia del mes</b><small>${tendenciaTexto}</small></div><strong>${tendencia.length?`${tendencia.length} días`:'—'}</strong></div>
+    <div class="item"><div class="item-main"><b>Mejor día de la semana</b><small>${mejor?`${mejor.atendimientos||0} atenciones · Gs ${money(mejor.facturacion)}`:'Sin datos'}</small></div><strong>${mejor?mejor.dia:'—'}</strong></div>
   </div>`;
+  const detalleTendencia=tendenciaUltimos.length?`<div class="section-title"><h2>Últimos días del mes</h2></div><div class="list">${tendenciaUltimos.map(x=>`<div class="item"><div class="item-main"><b>${x.fecha||'—'}</b><small>${Number(x.atendimientos)||0} atenciones</small></div><strong>Gs ${money(x.facturacion)}</strong></div>`).join('')}</div>`:'';
   const porServicio=servicios.length?`<div class="section-title"><h2>Faturamento por servicio</h2></div><div class="list">${servicios.slice(0,15).map(x=>`<div class="item"><div class="item-main"><b>${x.servico||x.servicio||'—'}</b><small>${Number(x.atendimientos)||0} atenciones</small></div><strong>Gs ${money(x.faturamento)}</strong></div>`).join('')}</div>`:`<div class="empty">No hay datos de facturación por servicio.</div>`;
   document.getElementById('detailTitle').textContent='Reportes';
   document.getElementById('detailSub').textContent='Resultados del Studio';
-  document.getElementById('detailBody').innerHTML=`${cards}${atend}<div class="section-title"><h2>Comparación y tendencia</h2></div>${comparacion}${porServicio}<div class="empty" style="margin-top:12px">Los datos de este reporte son de solo lectura y provienen del Admin V17. En esta etapa no se modifica ningún dato.</div>`;
+  document.getElementById('detailBody').innerHTML=`${cards}${atend}<div class="section-title"><h2>Comparación y tendencia</h2></div>${comparacion}${detalleTendencia}${porServicio}<div class="empty" style="margin-top:12px">Los datos de este reporte son de solo lectura y provienen del Admin V17. En esta etapa no se modifica ningún dato.</div>`;
   go('detalle');
 }
 function showServices(){
